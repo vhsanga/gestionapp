@@ -1,0 +1,843 @@
+<html>
+    <head>
+	<title>Disnova</title>
+      <!--Import Google Icon Font-->
+      <link type="text/css" rel="stylesheet" href="./materialize-css/dist/css/icons.css"/>
+      <link type="text/css" rel="stylesheet" href="./materialize-css/dist/css/materialize.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="./materialize-css/dist/css/jquery.dataTables.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="./assets/css/estilo.css"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	  
+    </head>
+
+<body>
+	
+	<header id="areaNav"></header>
+	
+	<main>
+	 <div class="container">
+  <div class="row" style="margin-top:20px;">
+
+
+    <div class="row" style="text-align: end;">
+        <span id="personaCreditoInfo"></span> 
+        <!-- Dropdown Trigger -->
+       <a id="dropPersonaMenu" class='dropdown-trigger btn' href='#' data-target='dropdown1'><i class="material-icons">arrow_drop_down</i> </a>
+       <!-- Dropdown Structure -->
+       <ul id='dropdown1' class='dropdown-content' style="width: 250px;">
+          <li><a href="#!" id="btnCancelar" ><i class="material-icons">cancel</i> Limpiar Datos</a></li>
+        </ul>           
+    </div>
+    <div id="test1" class="col s12">
+          <div class="card">
+            <div class="row">
+              <center>
+                <b class="titulo">Ingreso de Solicitud de credito</b>
+              </center>              
+            </div>
+            <div class="row">
+              <form id="datosPersona" class="col s12">
+                <input id="id" name="id" type="hidden" value="0" class="_formJSON" class="_formJSON"/>                
+                <div class="row">
+                    <div class="col s8">
+                      <div class="row">
+                        <div class="input-field col s8">
+                          <input id="identificacion" name="identificacion" type="number" class="validate _formJSON" required="true" maxlength="13">
+                          <label for="identificacion">Cedula</label>
+                        </div>                  
+                        <div class="input-field col s1">
+                          <button class="btn teal" type="button" id="btnBuscarPersona" ><i class="medium material-icons">search</i></button>
+                        </div>                  
+                      </div>
+
+                      <div class="row">
+                        <div class="input-field col s6">
+                          <input id="nombres" name="nombres" type="text" autocomplete="off" class="validate _formJSON" required="true">
+                          <label for="nombres">Nombres</label>
+                        </div>
+                        <div class="input-field col s6">
+                          <input id="apellidos" name="apellidos" type="text" autocomplete="off" class="validate _formJSON" required="true">
+                          <label for="apellidos">Apellidos</label>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="input-field col s6">
+                          <input id="fnacimiento" name="fnacimiento" type="text" class="datepicker _formJSON" autocomplete="off">
+                          <label for="fnacimiento">Fecha Nacimiento</label>
+                        </div>
+                        <div class="input-field col s6">
+                          <input  id="estadocivilcatalogo" name="estadocivilcatalogo" type="hidden" value="EST_CIV"  class="_formJSON"/>
+                          <select id="estadocivildetalle"  name="estadocivildetalle"  class="_formJSON" required="true">
+                            <option value="" disabled selected>Escoja una opcion</option>
+                          </select>
+                          <label >Estado Civil</label>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="input-field col s6">
+                          <input  id="generocatalogo" name="generocatalogo" type="hidden" value="GENER"  class="_formJSON" />
+                          <select id="generodetalle" name="generodetalle"  class="_formJSON" required="true">
+                            <option value="" disabled selected>Escoja una opcion</option>
+                          </select>
+                          <label for="genero" >Genero</label>
+                        </div>
+                        <div class="input-field col s6">                          
+                          <input id="email" name="email" type="text" autocomplete="off" class="validate _formJSON" required="true">
+                          <label for="email">Email</label>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <input id="contacto" name="contacto" type="text" class="_formJSON">
+                          <label for="contacto">Contacto</label>
+                        </div>                  
+                      </div>
+
+                    </div>
+
+                    <div class="col s4">
+                          <center>
+                            <button class="btn grey" type="button" id="btnFotoPersona" ><i class="medium material-icons">photo_camera</i></button>
+                            <br>
+                            <img id="imgPersona" src="" class="imgFoto" />
+                            <canvas id="c"></canvas>
+                          </center>                         
+                    </div>                    
+                  </div>
+
+                  <center>
+                    <button id="btnGuardar1" type="button" class="btn btn-large"> <i class="material-icons">check</i> Guardar Datos Personales </button>
+                  </center> 
+                  <div class="row"></div>        
+                  <div class="row"></div>        
+              </form>
+          </div> 
+        </div>	
+	  </div>
+	
+	
+    <div id="test2" class="col s12">
+      <div class="card">
+        <div class="row">
+          <center>
+            <b class="titulo">Direccion</b>
+          </center>              
+        </div>
+        <div class="row">
+          <div class="col s12">
+            <form id="datosDireccion">
+              <input id="id" name="id" type="hidden" value="0" class="_formJSON" />
+                  <div class="row">
+                    <div class="input-field col s3">
+                      <input  id="tipodireccioncatalogo" name="tipodireccioncatalogo" type="hidden" value="TIPODOM"  class="_formJSON" />
+                      <select id="tipodirecciondetalle"  name="tipodirecciondetalle" class="validate _formJSON" required="true">
+                      </select>
+                      <label >Tipo Direccion</label>
+                    </div>
+
+                    <div class="input-field col s3">
+                      <input id="tiempo" name="tiempo" type="number" class="validate _formJSON" required="true" maxlength="2" >
+                      <label for="tiempo">Tiempo (años)</label>
+                    </div>  
+                    <div class="input-field col s3">
+                      <select id="cprovincia"  name="cprovincia"  class="validate _formJSON" required="true">
+                      </select>
+                      <label >Provincia</label>
+                    </div>  
+                    <div class="input-field col s3">
+                      <select id="cciudad" name="cciudad" class="validate _formJSON" required="true" >
+                      </select>
+                      <label >Ciudad</label>
+                    </div> 
+
+                  </div>
+
+
+                  <div class="row">
+                    <div class="input-field col s1">
+                      <button id="btnUbicacion" class="btn teal" type="button">
+                        <i class="large material-icons">location_searching</i>
+                      </button>
+                    </div>
+                    <div class="input-field col s7">
+                      <input id="lat" name="lat" type="hidden" class="_formJSON" />
+                      <input id="lng" name="lng" type="hidden" class="_formJSON"/>
+                      <input id="direccion" name="direccion" type="text" class="validate _formJSON" required="true" maxlength="250">
+                      <label for="direccion">Direccion Completa, calle principal, numero y transversal</label>                      
+                    </div>   
+                    <div class="input-field col s4">
+                      <input id="sector" name="sector" type="text" class="validate _formJSON" required="true">
+                      <label for="sector">Sector</label>
+                    </div>                  
+                  </div>
+
+                  <div class="row">
+
+                    <div class="input-field col s12">
+                      <input id="direccionreal" name="direccionreal" type="text" class="validate _formJSON" required="true" maxlength="250">
+                      <label for="direccionreal">Direccion del Servicio Básico.</label>                      
+                    </div>   
+                                      
+                  </div>
+
+            </form>
+            <form id="datosTelefonicos">
+                  <input id="id" name="id" type="hidden" value="0"  class="_formJSON"/>
+                  <div class="row">
+                    
+                    <div class="input-field col s4">
+                      <input id="telefono"  name="telfono" type="number" class="validate _formJSON" required="true" maxlength="9">
+                      <label for="telefono">Telefono</label>
+                      <input  name="telefonoid" type="hidden" value="0" >
+                      <input  name="tipotelefonocatalogo" type="hidden" value="TIPOTLF"  class="_formJSON"/>                      
+                      <select id="tipoTelefono" name="tipotelefonodetalle"  class="validate _formJSON" ></select>
+                    </div>   
+                    <div class="input-field col s4">
+                      <input id="celular" name="telfono" type="number" class="validate _formJSON" required="true" maxlength="10">
+                      <label for="celular">Cedular</label>
+                      <input  name="telefonoid" type="hidden" value="0" >
+                      <input   name="tipotelefonocatalogo" type="hidden" value="TIPOTLF"  class="_formJSON"/>                       
+                      <select id="tipoCelular" name="tipotelefonodetalle"  class="validate _formJSON" ></select>
+                    </div> 
+                    <div class="input-field col s4">
+                      <input id="whatsapp" name="telfono"  type="number" class="validate _formJSON" required="true" maxlength="10">
+                      <label for="whatsapp">Whatsapp</label>
+                      <input  name="telefonoid" type="hidden" value="0" >
+                      <input   name="tipotelefonocatalogo" type="hidden" value="TIPOTLF"  class="_formJSON"/>                       
+                      <select id="tipoWhatsapp" name="tipotelefonodetalle"  class="validate _formJSON" ></select>
+                    </div>                  
+                  </div>
+            </form>
+
+                  <div class="row">                                          
+                    <div class="col s2">  
+                      <br/>                   
+                          <button type="button" class="btn green" id="btnFotoDomicilio">
+                            <i class="material-icons">photo_camera</i> + 
+                          </button>
+                    </div>
+                    <div class="col s10">  
+                      <br/>                   
+                          <img id="imgDireccion1" src="" class="imgFoto" />
+                          <img id="imgDireccion2" src="" class="imgFoto" />
+                          <img id="imgDireccion3" src="" class="imgFoto" />
+                    </div>
+                  </div>                   
+                       
+           
+                  <b>Ingrese las referencias:</b>
+                  <div class="row">   
+                      <div class="col s10">
+                        <table id="tblReferencias" >
+                          <tr>
+                            <td>
+                              <input  type="hidden" name="referenciaid" value="0" > 
+                              <input  type="text" name="referencianombres" placeholder="Nombres y apellidos" > </td>
+                            <td style="width: 35%; padding-left: 25px;">  <input  type="number" name="referenciatelefono"  placeholder="Telfonos" maxlength="10">  </td>                            
+                          </tr>
+                        </table> 
+                      </div>   
+                      <div class="col s2">
+                        <a id="btnAddReferencia" class="btn-floating  waves-effect  red"><i class="material-icons">add</i></a>
+                      </div>                   
+                  </div> 
+                  
+              <center>
+                <button id="btnGuardar2" class="btn btn-large" type="button" > <i class="material-icons">check</i> Guardar Direccion </button>
+              </center> 
+              <div class="row"></div>        
+              <div class="row"></div>        
+            </div>
+        </div> 
+      </div>	
+    </div>
+        
+    <div id="test3" class="col s12">
+      <div class="card">
+        <div class="row">
+          <center>
+            <b class="titulo">Datos del Conyuge</b>
+          </center>              
+        </div>
+        <div class="row">
+          <form id="datosConyuge" class="col s12">
+            <input id="id" name="id" type="hidden" value="0" class="_formJSON" />
+            <div class="row">
+              <div class="input-field col s8">
+                <input id="cedula" name="identificacion" type="number" class="validate _formJSON" required="true" maxlength="10">
+                <label for="cedula">Cedula</label>
+              </div>                  
+            </div>
+            <div class="row">
+              <div class="input-field col s6">
+                <input id="nombresC" name="nombres" type="text" class="validate _formJSON" required="true">
+                <label for="nombresC">Nombres</label>
+              </div>
+              <div class="input-field col s6">
+                <input id="apellidosC" name="apellidos" type="text" class="validate _formJSON" required="true">
+                <label for="apellidosC">Apellidos</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="direccionC" name="direccion" type="text" class="validate _formJSON" required="true" maxlength="250">
+                <label for="direccionC">Direccion Complera, calle principal, numero y transversal</label>
+              </div>                    
+            </div>
+            <div class="row">
+              <div class="input-field col s6">
+                <input id="telefonoC" name="telefono" type="number" class="validate _formJSON">
+                <label for="telefonoC">Telefonos</label>
+              </div>                  
+            </div>
+            <center>
+              <button id="btnGuardar3"  class="btn btn-large" type="button"> <i class="material-icons">check</i> Guardar Conyuge </button>
+            </center> 
+            <div class="row"></div>        
+            <div class="row"></div>        
+          </form>
+        </div>
+      </div>
+    </div>
+	
+    
+
+    <div id="test8" class="col s12">
+      <div class="card">
+        <div class="row">
+          <center>
+            <b class="titulo">Productos</b>
+          </center>              
+        </div>
+        <div class="row">
+          <form id="datosProducto" class="col s12">
+            <div class="row">              
+              <button  id="btnAddProducto"  class="btn grey right" type="button"> <i class="material-icons">add</i> Agregar Producto </button>
+            </div>
+            
+            <div class="row">              
+                <table id="tablaProductos" style="width: 98%;">
+                  <thead>
+                    <tr>
+                        <th >Producto</th>
+                        <th >Marca/ color / serie</th> 
+                        <th style="text-align: right;">P unit</th> 
+                        <th style="text-align: right;">Cant</th>                         
+                        <th style="text-align: right;">P total</th> 
+                    </tr>
+                  </thead>
+                </table>  
+
+                 
+            </div>
+            
+                 
+          </form>
+        </div>
+
+        <div class="row">
+          <form id="datosSolicitud" class="col s12">
+            <input id="id" name="id" type="hidden" value="0" class="_formJSON" />
+            <div class="row">
+              <div class="input-field col s3">
+                <input id="valortotal" type="number" name="valortotal"  value="0"  class="validate _formJSON" required="true" disabled>
+                <label for="valortotal">Valor Total</label>
+              </div>   
+              <div class="input-field col s3">
+                <input id="entrada" type="number" name="entrada"   class="validate _formJSON" required="true">
+                <label for="entrada">Valor Entrada</label>
+              </div> 
+              <div class="input-field col s3">
+                <select id="frecuencia" name="frecuencia" class="validate _formJSON" required="true">
+                      <option value="Diario" >Diario</option>
+                      <option value="Semanal" >Semanal</option>
+                      <option value="Quincena" >Quincena</option>
+                      <option value="Mensual" >Mensual</option>
+                </select>
+                <label >Frecuencia</label>
+              </div> 
+              <div class="input-field col s3">
+                <input id="cuota" type="number" name="cuota"   class="validate _formJSON" required="true">
+                <label for="cuota">Valor Cuota</label>
+              </div>   
+           
+            </div>
+
+          </form>
+        </div>
+
+        <center>
+          <button  id="btnGuardar8"  class="btn btn-large" type="button"> <i class="material-icons">check</i> Guardar Productos </button>
+        </center> 
+        <div class="row"></div>        
+        <div class="row"></div>  
+
+      </div>	
+	  </div>
+
+
+    <div id="test4" class="col s12">
+      <div class="card">
+        <div class="row">
+          <center>
+            <b class="titulo">Datos del Garante</b>
+          </center>              
+        </div>
+        <div class="row">
+          <form id="datosGarante" class="col s12">
+            <input id="id" name="id" type="hidden" value="0" class="_formJSON" />
+            <div class="row">
+              <div class="input-field col s8">
+                <input id="cedulaG" type="number" name="identificacion"   class="validate _formJSON" required="true" maxlength="10">
+                <label for="cedulaG">Cedula</label>
+              </div>                  
+            </div>
+            <div class="row">
+              <div class="input-field col s6">
+                <input id="nombresG" type="text" name="nombres"  class="validate _formJSON" required="true">
+                <label for="nombresG">Nombres</label>
+              </div>
+              <div class="input-field col s6">
+                <input id="apellidosG" type="text"  name="apellidos"  class="validate _formJSON" required="true">
+                <label for="apellidosG">Apellidos</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s6">
+                <input  id="tipodireccioncatalogo" name="tipodomiciliocatalogo" type="hidden" value="TIPODOM"  class="_formJSON" />
+                <select id="tipodomiciliogarante"  name="tipodomiciliodetalle" class="validate _formJSON" required="true" >
+                </select>
+                <label >Tipo Vivienda</label>
+              </div>
+
+              <div class="input-field col s6">
+                <input id="tiempoG" type="number"  name="tiempo" class="validate _formJSON" required="true" maxlength="23" >
+                <label for="tiempoG">Tiempo (años)</label>
+              </div>                     
+            </div>
+            <div class="row">
+              <div class="input-field col s4">
+                <input id="telefonoG" type="number"  name="telefono" class="validate _formJSON" required="true">
+                <label for="telefonoG">Telefonos</label>
+              </div> 
+              <div class="input-field col s8">
+                <input id="direccionG" type="text" name="direccion" class="validate _formJSON" required="true" maxlength="250">
+                <label for="direccionG">Direccion del garante, calle principal, numero y transversal</label>
+              </div>                                 
+            </div>
+            <div class="row">
+              <div class="input-field col s4">
+                <input id="lugarTrabajo" name="lugarTrabajo" type="text"  class="validate _formJSON" required="true">
+                <label for="lugarTrabajo">Lugar del trabajo</label>
+              </div>   
+              <div class="input-field col s8">
+                <input id="direccionTrabajo" name="direccionTrabajo" type="text"   class="validate _formJSON" required="true">
+                <label for="direccionTrabajo">Direccion del trabajo</label>
+              </div>                 
+            </div>
+            <center>
+              <button  id="btnGuardar4"  class="btn btn-large" type="button"> <i class="material-icons">check</i> Guardar Garante </button>
+            </center> 
+            <div class="row"></div>        
+            <div class="row"></div>        
+          </form>
+        </div>
+      </div>	
+	  </div>
+
+
+
+
+    <div id="test5" class="col s12">
+      <div class="card">
+        <div class="row">
+          <center>
+            <b class="titulo">Actividad Economica</b>
+          </center>              
+        </div>
+        <div class="row">
+          <form id="datosActividad" class="col s12">
+            <input id="id" name="id" type="hidden" value="0" class="_formJSON" />
+            <div class="row">
+              <div class="input-field col s4">
+                <select id="ocupacion" name="ocupacion" class="validate _formJSON" required="true">
+                </select>
+                <label >Ocupacion</label>
+              </div>
+
+              <div class="input-field col s8">
+                <input id="trabajoactual" name="trabajoactual" type="text" class="validate _formJSON" required="true">
+                <label for="trabajoactual">TRABAJO ACTUAL (Actividad que realiza/cargo)</label>
+              </div>                     
+            </div>
+
+            <div class="row">
+              <div class="input-field col s8">
+                <input id="direccionempresa" name="direccionempresa" type="text" class="validate _formJSON" required="true">
+                <label for="direccion">Direccion donde trabaja </label>
+              </div> 
+              <div class="input-field col s4">
+                <input id="telefonoA" name="telefono" type="number" class="validate _formJSON" required="true" maxlength="10">
+                <label for="telefonoA">Telefonos</label>
+              </div> 
+                                              
+            </div>
+
+            <div class="row">
+              <div class="input-field col s4">
+                <input id="sueldo" name="ingresos" type="number" class="validate _formJSON" required="true" maxlength="6">
+                <label for="sueldo">sueldo</label>
+              </div>                  
+            </div>
+                  
+            <center>
+              <button id="btnGuardar5"  class="btn btn-large" type="button"> <i class="material-icons">check</i> Guardar Actividad Economica </button>
+            </center> 
+            <div class="row"></div>        
+            <div class="row"></div>        
+          </form>
+        </div>
+      </div>	
+	  </div>
+
+
+
+
+    <div id="test6" class="col s12">
+      <div class="card">
+        <div class="row">
+          <center>
+            <b class="titulo">Declaracion de Ingresos</b>
+          </center>              
+        </div>
+        <div class="row"></div>
+        <div class="row">
+          <div class="col s12">
+            <div class="row">
+              <div class="col s5">
+                <form id="datosDeclaracionIngresos">
+                  <input id="id" name="id" type="hidden" value="0" class="_formJSON"/>
+                  <table >
+                    <thead>
+                      <tr>
+                          <th style="text-align: center;">INGRESOS</th>
+                      </tr>
+                    </thead>
+            
+                    <tbody>
+                      <tr>
+                        <td style="text-align: end;">
+                            Sueldos / Ingreso:<input name="ingresos" id="ingresos" value="0" type="number" style="width: 120px; text-align: end;" class="validate _formJSON" required="true" maxlength="6" >
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="text-align: end;">
+                          Ingreso Conyuge:<input name="ingresoconyuge" value="0" type="number" style="width: 120px; text-align: end;" class="validate _formJSON" required="true" maxlength="6">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="text-align: end;">
+                          Arriendos:<input name="arriendos" value="0" type="number" style="width: 120px; text-align: end;"  class="validate _formJSON" required="true" maxlength="6">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="text-align: end;">
+                          Pensiones:<input name="pensiones" value="0" type="number" style="width: 120px; text-align: end;" class="validate _formJSON" required="true" maxlength="6">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="text-align: end;">
+                          Otros Ingresos:<input name="otrosingresos" value="0" type="number" style="width: 120px; text-align: end;" class="validate _formJSON" required="true" maxlength="6" >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>   
+                </form>  
+              </div>
+              
+              <div class="col s1"></div>
+              <div class="col s6">   
+                <form id="datosDeclaracionEgresos">
+                  <input id="id" name="id" type="hidden" value="0" class="_formJSON"/>
+                  <table >
+                    <thead>
+                      <tr>
+                          <th style="text-align: center;">EGRESOS</th>
+                      </tr>
+                    </thead>
+            
+                    <tbody>
+                      <tr>
+                        <td style="text-align: end;"> 
+                            Arriendo:<input name="arriendo" value="0" type="number" style="width: 120px; text-align: end;" class="validate _formJSON" required="true" maxlength="6" >
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="text-align: end;">
+                          Servicios Basicos:<input name="serviciosbasicos" value="0" type="number" style="width: 120px; text-align: end;"  class="validate _formJSON" required="true" maxlength="6">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="text-align: end;">
+                          Alimentacion:<input name="alimentacion" value="0" type="number" style="width: 120px; text-align: end;" class="validate _formJSON" required="true" maxlength="6">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="text-align: end;">
+                          Transporte:<input name="transporte" value="0" type="number" style="width: 120px; text-align: end;" class="validate _formJSON" required="true" maxlength="6" >
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="text-align: end;">
+                          Colegios:<input name="colegios" value="0" type="number" style="width: 120px; text-align: end;" class="validate _formJSON" required="true" maxlength="6" >
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="text-align: end;">
+                          Obligaciones domesticas:<input name="obligacionesdomesticas" value="0" type="number" style="width: 120px; text-align: end;" class="validate _formJSON" required="true" maxlength="6" >
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="text-align: end;">
+                          Otros Egresos:<input name="otrosegresos" value="0" type="number" style="width: 120px; text-align: end;" class="validate _formJSON" required="true" maxlength="6" >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>   
+                </form>
+              </div>     
+
+
+            </div>
+
+          
+                  
+            <center>
+              <button  id="btnGuardar6"  class="btn btn-large" type="button"> <i class="material-icons">check</i> Guardar Ingresos y Egresos </button>
+            </center> 
+            <div class="row"></div>        
+            <div class="row"></div>        
+          </div>
+        </div>
+      </div>	
+	  </div>
+
+
+    <div id="test9" class="col s12">
+      <div class="card">
+        <div class="row">
+          <center>
+            <b class="titulo">Ingreso de Documentos</b>
+          </center>              
+        </div>
+        <div class="row">
+          <form id="datosDocumentos" class="col s12">
+            <div class="row">
+              <div class="col s4" style="text-align: center;">
+                <label>Documentos Solicitante</label><br />
+                <img id="imgDocumentosSolicitante" src="" class="imgFoto" /> <br />
+                <button type="button" class="btn green" id="btnDocumentosSolicitante">
+                  <i class="material-icons">photo_camera</i>
+                </button>                
+              </div>
+              <div class="col s4" style="text-align: center;">
+                <label>Documentos Conyuge</label><br /> 
+                <img id="imgDocumentosConyuge" src="" class="imgFoto" /><br />
+                <button type="button" class="btn green" id="btnDocumentosConyuge">
+                  <i class="material-icons">photo_camera</i>
+                </button>               
+              </div>
+              <div class="col s4" style="text-align: center;">
+                <label>Documentos Garante</label><br />
+                <img id="imgDocumentosGarante" src="" class="imgFoto" /><br />
+                <button type="button" class="btn green" id="btnDocumentosGarante">
+                  <i class="material-icons">photo_camera</i>
+                </button>                
+              </div>                  
+            </div>
+
+            <div class="row">
+              <div class="col s4" style="text-align: center;">
+                <label>Servicio Basico</label><br />
+                <img id="imgFotoServicioBasico1" src="" class="imgFoto" /> <br />
+                <button type="button" class="btn green" id="btnFotoServicioBasico1">
+                  <i class="material-icons">photo_camera</i>
+                </button>                
+              </div>
+              <div class="col s4" style="text-align: center;">
+                <label>Servicio Basico</label><br />
+                <img id="imgFotoServicioBasico2" src="" class="imgFoto" /> <br />
+                <button type="button" class="btn green" id="btnFotoServicioBasico2">
+                  <i class="material-icons">photo_camera</i>
+                </button>                
+              </div>                
+            </div>
+
+            <div class="row"></div>        
+            <div class="row"></div>        
+            <div class="row"></div>        
+            <center>
+              <button id="btnGuardar9"  class="btn btn-large" type="button"> <i class="material-icons">check</i> GUARDAR DOCUMENTOS </button>
+            </center> 
+            <div class="row"></div>        
+            <div class="row"></div>        
+          </form>
+        </div>
+      </div>	
+	  </div>
+
+
+    <div id="test7" class="col s12">
+      <div class="card">
+        <div class="row">
+          <center>
+            <b class="titulo">Autorizacion y Firmas</b>
+          </center>              
+        </div>
+        <div class="row">
+          <form id="datosFirma" class="col s12">
+            <input id="id" name="id" type="hidden" value="0" class="_formJSON" />
+            <div class="row">
+              <p style="text-align: justify; padding-left: 15px; padding-right: 15px;">
+                Autorizo(amos) expresa e irrevocablemente a DISNOVA o quien se el futuro cesionario beneficiario o acreedor del crédito solicitado o del documento o titulo cambiario que lo respalde para que obtenga cuantas veces sean necesarias, de cualquier fuente de información, incluidos los burós de crédito, mi información de riesgos crediticios, de igual forma, DISNOVA o a quien sea el futuro cesionario, beneficiarioo acreedor de crédito solicitado o del documento o titulo cambiario que le respalde queda expresamente autorizado para que pueda transferir o entregar dicha informacion a los burós de crédito y/o a la central de riesgo legalmente autorizados por la Superintendencia de Bancos si fuere pertinente.
+              </p>                  
+            </div>
+
+            <div class="row">              
+              <div style="text-align: center;">                
+                <div style="text-align: center;" >                   
+                  <canvas id="firma1" width="500" height="500"></canvas>                   
+                </div>
+                <label for="firma1">Firma de Solicitante </label> <br />
+                <button id="btnRepetirFirma1" class="btn grey" type="button"> Repetir firma </button>
+              </div>
+
+            </div>
+
+
+            <div class="row">
+              <div style="text-align: center;">
+                <div style="text-align: center;" > 
+                  <canvas id="firma2" width="500" height="500"></canvas>
+                </div>
+                <label for="firma2">Firma del Garante</label><br />
+                <button id="btnRepetirFirma2" class="btn grey" type="button"> Repetir firma </button>
+              </div>
+            </div>
+
+            <div class="row"></div>        
+            <div class="row"></div>        
+            <div class="row"></div>        
+            <center>
+              <button id="btnGuardar7"  class="btn btn-large" type="button"> <i class="material-icons">check</i> FINALIZAR SOLICIUD DE CREDITO </button>
+            </center> 
+            <div class="row"></div>        
+            <div class="row"></div>        
+          </form>
+        </div>
+      </div>	
+	  </div>
+	
+  </div>	 
+	</div>
+	</main>
+	
+  <footer class="page-footer">
+    <div class="row" id="frow" style="margin-bottom:0px;">
+      <div class="col s12" style="padding-left:0px!important;padding-right:0px!important;">
+        <ul class="tabs tabs-fixed-width transparent white-text">
+          <li class="tab col s3 white-text"><a href="#test1" id="linkTest1" class="active white-text"><i class="material-icons">account_circle</i></a></li>
+          <li class="tab col s3"><a href="#test2" id="linkTest2" class="white-text"><i class="material-icons">person_pin_circle</i></a></li>
+          <li class="tab col s3" id="liTab3"><a href="#test3" id="linkTest3" class="white-text" ><i class="material-icons">group</i></a></li>          
+          <li class="tab col s3"><a href="#test8" id="linkTest8" class="white-text"><i class="material-icons">shopping_cart</i></a></li>          
+          <li class="tab col s3"><a href="#test4" id="linkTest4" class="white-text"><i class="material-icons">perm_identity</i></a></li>
+          <li class="tab col s3"><a href="#test5" id="linkTest5" class="white-text"><i class="material-icons">directions_run</i></a></li>
+          <li class="tab col s3"><a href="#test6" id="linkTest6" class="white-text"><i class="material-icons">attach_money</i></a></li>
+          <li class="tab col s3"><a href="#test9" id="linkTest9" class="white-text"><i class="material-icons">photo_camera</i></a></li>
+          <li class="tab col s3"><a href="#test7" id="linkTest7" class="white-text"><i class="material-icons">create</i></a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal Structure -->
+  <div id="areaAux" ></div>
+
+  <div id="modalProducto" class="modal"> 
+        <div class="modal-content"> 
+          <h4>Ingrese un producto</h4>
+          <form id="datosAddProducto" class="col s12">            
+            <div class="row">
+              <div class="input-field col s1"></div>
+              <div class="input-field col s5">
+                <input id="modelo" name="modelo" type="text" class="validate _formJSON" required="true">
+                <label for="modelo">Marca / Modelo</label>
+              </div>
+              <div class="input-field col s5">
+                <input id="descripcion" name="descripcion" type="text" class="validate _formJSON" required="true">
+                <label for="descripcion">Descripcion, color, serie</label>
+              </div>
+            </div>
+  
+            <div class="row">
+              <div class="input-field col s1"></div>
+              <div class="input-field col s5">
+                <input id="punitario" name="punitario" type="number" class="validate _formJSON" required="true">
+                <label for="punitario">Precion unitario</label>
+              </div>
+              <div class="input-field col s5">
+                <input id="cantidad" name="cantidad" type="number" class="validate _formJSON" required="true">
+                <label for="cantidad">Cantidad</label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="input-field col s4"></div>
+              <div class="input-field col s4">
+                <input id="ptotal" name="ptotal" type="number" class="validate _formJSON" required="true" >
+                <label for="ptotal">Precion total</label>
+              </div>
+            </div>
+
+
+          </form>  
+
+        </div> 
+        <div class="modal-footer"> 
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat"> <i class="medium material-icons">close</i> Cancelar</a> 
+            <a href="#!" id="btnGuardarProducto" class="waves-effect waves-green btn-flat"> <i class="medium material-icons">check</i> Guardar</a>             
+        </div> 
+  </div>
+
+  <div id="modalUbicacion" class="modal modalubicacion"> 
+    <div class="modal-content"> 
+      <h4>Ubicacion de la direccion</h4>
+      <div id="map"></div>
+
+    </div> 
+    <div class="modal-footer"> 
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat"> <i class="medium material-icons">check</i> Aceptar</a>             
+    </div> 
+</div>
+
+
+  <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="./materialize-css/dist/js/jquery.min.js"></script>  
+  <script type="text/javascript" src="./materialize-css/dist/js/materialize.min.js"></script>
+  <script type="text/javascript" src="./materialize-css/dist/js/materializeTabs.min.js"></script>
+  <script type="text/javascript" src="./materialize-css/dist/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" src="./assets/app-js/_util.js"></script>
+  <script type="text/javascript" src="./assets/app-js/home.js"></script>
+  <script type="text/javascript" src="./assets/app-js/firma1.js"></script>
+  <script type="text/javascript" src="./assets/app-js/firma2.js"></script>
+  <script type="text/javascript" src="./assets/app-js/mapa.js"></script>
+  <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0KdNBIEdhjGVIQzimIFDmzhW9DOnUS88&callback=initMap&libraries=&v=weekly"
+      async
+    ></script>
+</body>
+</html>
