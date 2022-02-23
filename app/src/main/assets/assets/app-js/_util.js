@@ -1,5 +1,5 @@
 //moment.locale('es')  ;
-const URL="http://192.168.100.65:8080";
+const URL="http://172.17.24.47:8080";
 //const URL="http://localhost:8080";
 const _idcompania=1;
 const _iconoError="warning";

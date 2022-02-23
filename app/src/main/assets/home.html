@@ -39,18 +39,30 @@
             </div>
             <div class="row">
               <form id="datosPersona" class="col s12">
-                <input id="id" name="id" type="hidden" value="0" class="_formJSON" class="_formJSON"/>                
+                <input id="id" name="id" type="hidden" value="0" class="_formJSON" class="_formJSON"/>
                 <div class="row">
+                  <div class="col s12">
                     <div class="col s8">
-                      <div class="row">
-                        <div class="input-field col s8">
-                          <input id="identificacion" name="identificacion" type="number" class="validate _formJSON" required="true" maxlength="13">
-                          <label for="identificacion">Cedula</label>
-                        </div>                  
-                        <div class="input-field col s1">
-                          <button class="btn teal" type="button" id="btnBuscarPersona" ><i class="medium material-icons">search</i></button>
-                        </div>                  
+                      <div class="input-field col s10">
+                        <input id="identificacion" name="identificacion" type="number" class="validate _formJSON" required="true" maxlength="13">
+                        <label for="identificacion">Cedula</label>
                       </div>
+                      <div class="input-field col s2">
+                        <button class="btn teal" type="button" id="btnBuscarPersona" ><i class="medium material-icons">search</i></button>
+                      </div>
+                    </div>
+                    <div class="col s4">
+                      <center>
+                        <button class="btn grey" type="button" id="btnFotoPersona" ><i class="medium material-icons">photo_camera</i></button>
+                        <br>
+                        <img id="imgPersona" src="" class="imgFoto" />
+                      </center>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
 
                       <div class="row">
                         <div class="input-field col s6">
@@ -99,14 +111,7 @@
 
                     </div>
 
-                    <div class="col s4">
-                          <center>
-                            <button class="btn grey" type="button" id="btnFotoPersona" ><i class="medium material-icons">photo_camera</i></button>
-                            <br>
-                            <img id="imgPersona" src="" class="imgFoto" />
-                            <canvas id="c"></canvas>
-                          </center>                         
-                    </div>                    
+
                   </div>
 
                   <center>
@@ -638,23 +643,23 @@
           <form id="datosDocumentos" class="col s12">
             <div class="row">
               <div class="col s4" style="text-align: center;">
-                <label>Documentos Solicitante</label><br />
-                <img id="imgDocumentosSolicitante" src="" class="imgFoto" /> <br />
-                <button type="button" class="btn green" id="btnDocumentosSolicitante">
+                <label>Cedula Solicitante Frente</label><br />
+                <img id="imgCedulaAnversoSolicitante" src="" class="imgFoto" /> <br />
+                <button type="button" class="btn green" id="btnCedulaAnversoSolicitante">
                   <i class="material-icons">photo_camera</i>
                 </button>                
               </div>
               <div class="col s4" style="text-align: center;">
-                <label>Documentos Conyuge</label><br /> 
-                <img id="imgDocumentosConyuge" src="" class="imgFoto" /><br />
-                <button type="button" class="btn green" id="btnDocumentosConyuge">
+                <label>Cédula Solicitante Revero</label><br />
+                <img id="imgCedulaReversoSolicitante" src="" class="imgFoto" /><br />
+                <button type="button" class="btn green" id="btnCedulaReversoSolicitante">
                   <i class="material-icons">photo_camera</i>
                 </button>               
               </div>
               <div class="col s4" style="text-align: center;">
-                <label>Documentos Garante</label><br />
-                <img id="imgDocumentosGarante" src="" class="imgFoto" /><br />
-                <button type="button" class="btn green" id="btnDocumentosGarante">
+                <label>Servicio Básico Solicitante</label><br />
+                <img id="imgServicioSolicitante" src="" class="imgFoto" /><br />
+                <button type="button" class="btn green" id="btnServicioSolicitante">
                   <i class="material-icons">photo_camera</i>
                 </button>                
               </div>                  
@@ -662,19 +667,51 @@
 
             <div class="row">
               <div class="col s4" style="text-align: center;">
-                <label>Servicio Basico</label><br />
-                <img id="imgFotoServicioBasico1" src="" class="imgFoto" /> <br />
-                <button type="button" class="btn green" id="btnFotoServicioBasico1">
+                <label>Cedula Garante Frente</label><br />
+                <img id="imgCedulaAnversoGarante" src="" class="imgFoto" /> <br />
+                <button type="button" class="btn green" id="btnCedulaAnversoGarante">
                   <i class="material-icons">photo_camera</i>
-                </button>                
+                </button>
               </div>
               <div class="col s4" style="text-align: center;">
-                <label>Servicio Basico</label><br />
-                <img id="imgFotoServicioBasico2" src="" class="imgFoto" /> <br />
-                <button type="button" class="btn green" id="btnFotoServicioBasico2">
+                <label>Cédula Solicitante Revero</label><br />
+                <img id="imgCedulaReversoGarante" src="" class="imgFoto" /><br />
+                <button type="button" class="btn green" id="btnCedulaReversoGarante">
                   <i class="material-icons">photo_camera</i>
-                </button>                
-              </div>                
+                </button>
+              </div>
+              <div class="col s4" style="text-align: center;">
+                <label>Servicio Básico Solicitante</label><br />
+                <img id="imgServicioGarante" src="" class="imgFoto" /><br />
+                <button type="button" class="btn green" id="btnServicioGarante">
+                  <i class="material-icons">photo_camera</i>
+                </button>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col s4" style="text-align: center;">
+                <label>Cedula Garante Frente</label><br />
+                <img id="imgAux1" src="" class="imgFoto" /> <br />
+                <button type="button" class="btn green" id="btnImgAux1">
+                  <i class="material-icons">photo_camera</i>
+                </button>
+              </div>
+              <div class="col s4" style="text-align: center;">
+                <label>Cédula Solicitante Revero</label><br />
+                <img id="imgAux2" src="" class="imgFoto" /><br />
+                <button type="button" class="btn green" id="btnImgAux2">
+                  <i class="material-icons">photo_camera</i>
+                </button>
+              </div>
+              <div class="col s4" style="text-align: center;">
+                <label>Servicio Básico Solicitante</label><br />
+                <img id="imgAux3" src="" class="imgFoto" /><br />
+                <button type="button" class="btn green" id="btnImgAux3">
+                  <i class="material-icons">photo_camera</i>
+                </button>
+              </div>
             </div>
 
             <div class="row"></div>        

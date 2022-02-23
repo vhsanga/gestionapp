@@ -116,26 +116,42 @@ function initAcciones(){
     });
 
 
-    $("#btnDocumentosSolicitante").on("click", function(event){
-        Android.tomarFoto('imgDocumentosSolicitante');
+    $("#btnCedulaAnversoSolicitante").on("click", function(event){
+        Android.tomarFoto('imgCedulaAnversoSolicitante');
     });
 
-    $("#btnDocumentosConyuge").on("click", function(event){
-        Android.tomarFoto('imgDocumentosConyuge');
+    $("#btnCedulaReversoSolicitante").on("click", function(event){
+        Android.tomarFoto('imgCedulaReversoSolicitante');
     });
 
-    $("#btnDocumentosGarante").on("click", function(event){
-        Android.tomarFoto('imgDocumentosGarante');
+    $("#btnServicioSolicitante").on("click", function(event){
+        Android.tomarFoto('imgServicioSolicitante');
     });
 
-    $("#btnFotoServicioBasico1").on("click", function(event){
-        Android.tomarFoto('imgFotoServicioBasico1');
+    $("#btnCedulaAnversoGarante").on("click", function(event){
+        Android.tomarFoto('imgCedulaAnversoGarante');
     });
 
-    $("#btnFotoServicioBasico2").on("click", function(event){
-        Android.tomarFoto('imgFotoServicioBasico2');
+    $("#btnCedulaReversoGarante").on("click", function(event){
+        Android.tomarFoto('imgCedulaReversoGarante');
     });
-    
+
+    $("#btnServicioGarante").on("click", function(event){
+        Android.tomarFoto('imgServicioGarante');
+    });
+
+    $("#btnImgAux1").on("click", function(event){
+        Android.tomarFoto('imgAux1');
+    });
+
+    $("#btnImgAux2").on("click", function(event){
+        Android.tomarFoto('imgAux2');
+    });
+
+    $("#btnImgAux3").on("click", function(event){
+        Android.tomarFoto('imgAux3');
+    });
+
     $("#btnAddReferencia").on("click", function(event){
         if(numReferencias < numReferenciasMax  ){
             $("#tblReferencias").append(
@@ -794,16 +810,26 @@ function guardarProducto(){
 function guardarTab9(){
     var imgHtml= [];
     var tipoImagen= [];
-    imgHtml.push("imgDocumentosSolicitante");
-    tipoImagen.push("DOCSOL");
-    imgHtml.push("imgDocumentosConyuge");
-    tipoImagen.push("DOCCON");
-    imgHtml.push("imgDocumentosGarante");
-    tipoImagen.push("DOCGAR");
-    imgHtml.push("imgFotoServicioBasico1");
-    tipoImagen.push("DOCSE1");
-    imgHtml.push("imgFotoServicioBasico2");
-    tipoImagen.push("DOCSE2");
+    imgHtml.push("imgCedulaAnversoSolicitante");
+    tipoImagen.push("CEDAS");
+    imgHtml.push("imgCedulaReversoSolicitante");
+    tipoImagen.push("CEDRS");
+    imgHtml.push("imgServicioSolicitante");
+    tipoImagen.push("SERSOL");
+    imgHtml.push("imgCedulaAnversoGarante");
+    tipoImagen.push("CEDAG");
+    imgHtml.push("imgCedulaReversoGarante");
+    tipoImagen.push("CEDRG");
+    imgHtml.push("imgServicioGarante");
+    tipoImagen.push("SERGAR");
+    imgHtml.push("imgAux1");
+    tipoImagen.push("AUX1");
+    imgHtml.push("imgAux2");
+    tipoImagen.push("AUX2");
+    imgHtml.push("imgAux3");
+    tipoImagen.push("AUX3");
+
+
     guardarImagenes(imgHtml, tipoImagen, 0, function(){
         _mostrarMensajeExito("Se han guardado las Imagenes.", function(){
             $("#test7").click();        
