@@ -217,7 +217,7 @@ function initAcciones(){
     });
 
     $("#btnUbicacion").on("click", function(e){
-        modalUbicacion.open();
+        Android.obtenerUbicacion();
     });
     
     $("#btnGuardar9").on("click", function(event){        
@@ -226,6 +226,12 @@ function initAcciones(){
     
     initDataTable();
     
+}
+function mostrarUbicacion(lat, lng){
+    console.log(lat);
+    console.log(lng);
+    cambiarPosicion(lat, lng);
+    modalUbicacion.open();
 }
 
 function initDataTable(){
