@@ -13,7 +13,11 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -38,6 +42,7 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.core.app.ActivityCompat;
@@ -54,6 +59,7 @@ import com.example.disnovacreditos.databinding.ActivityMainBinding;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
 import android.webkit.URLUtil;
@@ -63,6 +69,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -390,6 +397,26 @@ public class MainActivity extends AppCompatActivity {
             dispatchTakePictureIntent();
         }
 
+
+
+        @JavascriptInterface
+        public void abrirDialogoFirma(String idHtmlFoto) {
+
+
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            ViewGroup viewGroup = findViewById(android.R.id.content);
+            View dialogView = LayoutInflater.from( getApplicationContext() ).inflate(R.layout.firma_dialog, viewGroup, false);
+            builder.setView(dialogView);
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+
+            RelativeLayout layout1 = (RelativeLayout) findViewById(R.id.layoutFirma);
+            Lienzo fondo = new Lienzo(getApplicationContext());
+            layout1.addView(fondo);
+        }
+
+
         @JavascriptInterface
         public void obtenerUbicacion() {
             getLastLocation();
@@ -503,6 +530,23 @@ public class MainActivity extends AppCompatActivity {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
+
+    class Lienzo extends View {
+
+        public Lienzo(Context context) {
+            super(context);
+        }
+
+        protected void onDraw(Canvas canvas) {
+            canvas.drawRGB(255, 255, 0);
+            int ancho = canvas.getWidth();
+            Paint pincel1 = new Paint();
+            pincel1.setARGB(255, 255, 0, 0);
+            canvas.drawLine(0, 30, ancho, 30, pincel1);
+            pincel1.setStrokeWidth(4);
+            canvas.drawLine(0, 60, ancho, 60, pincel1);
+        }
+    }
 
 
 }

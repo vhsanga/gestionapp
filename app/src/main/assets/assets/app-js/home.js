@@ -89,11 +89,12 @@ function initAcciones(){
         guardarTab8();
     });
     $("#btnRepetirFirma1").on("click", function(event){
-        limpiarFirma1();
+        Android.abrirDialogoFirma('imgPersona');
+        /*limpiarFirma1();
         $("#contF1").empty();
         $("#contF1").html('<canvas id="firma1"></canvas>');
         initVariablesF1();
-        eventosF1();
+        eventosF1();*/
     });
     $("#btnRepetirFirma2").on("click", function(event){
         limpiarFirma2();
