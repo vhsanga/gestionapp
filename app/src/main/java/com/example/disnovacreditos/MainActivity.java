@@ -11,12 +11,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
@@ -39,10 +41,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Environment;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.provider.Settings;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.core.app.ActivityCompat;
@@ -60,6 +64,7 @@ import com.example.disnovacreditos.databinding.ActivityMainBinding;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
 import android.webkit.URLUtil;
@@ -72,11 +77,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -98,6 +106,10 @@ public class MainActivity extends AppCompatActivity {
     int PERMISSION_ID = 44;
     double latitud;
     double longitud;
+    private DrawView paint;
+    private Uri fileUri;
+    private String filePath;
+    private final static int PICKFILE_RESULT_CODE=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
         });
+
     }
 
 
@@ -188,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("info");
 
-            String msg = "This app won't work properly unless you grant below permissions.";
+            String msg = "Es necesario que conceda todos los permisos.";
             for (String str : results)
                 msg += ("\n- "+ str);
 
@@ -291,6 +304,19 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
             Bitmap originalBitmap = BitmapFactory.decodeFile(currentPhotoPath);
+            File file = new File(currentPhotoPath);
+            file.delete();
+            if(file.exists()){
+                try {
+                    file.getCanonicalFile().delete();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if(file.exists()){
+                    getApplicationContext().deleteFile(file.getName());
+                }
+            }
+
             int scaleFactor = 4;
             Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, originalBitmap.getWidth()/scaleFactor,
                     originalBitmap.getHeight()/scaleFactor, true);
@@ -321,8 +347,84 @@ public class MainActivity extends AppCompatActivity {
                 ex.printStackTrace();
             }
         }
+
+        switch (requestCode) {
+            case PICKFILE_RESULT_CODE:
+                if (resultCode == -1) {
+                    Uri uri = data.getData();
+                    String fileName = getFileName(uri);
+
+                    // The temp file could be whatever you want
+                    try {
+                        File fileCopy = copyToTempFile(uri, new File(fileName));
+                        currentPhotoPath = fileCopy.getAbsolutePath();
+                        Bitmap originalBitmap = BitmapFactory.decodeFile(currentPhotoPath);
+
+                        int scaleFactor = 4;
+                        Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, originalBitmap.getWidth()/scaleFactor,
+                                originalBitmap.getHeight()/scaleFactor, true);
+                        Matrix m = new Matrix();
+                        m.postRotate(90);
+                        Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), m, true);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
+                            Log.d("size:", String.valueOf(rotatedBitmap.getByteCount()));
+                        } else {// www. j  a  va  2s.c o m
+                            Log.d("size:", String.valueOf(rotatedBitmap.getRowBytes() * rotatedBitmap.getHeight()));
+                        }
+                        Log.d("width", String.valueOf(rotatedBitmap.getWidth()));
+                        Log.d("Height", String.valueOf(rotatedBitmap.getHeight()));
+                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                        rotatedBitmap.compress(Bitmap.CompressFormat.PNG, 20, byteArrayOutputStream);
+                        byte[] byteArray = byteArrayOutputStream.toByteArray();
+                        Log.d("size d:", String.valueOf(byteArray.length));
+                        String imgageBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        try {
+                            final String retFunction = "javascript:mostrarFoto('"+URLEncoder.encode(imgageBase64, "UTF-8")+"' , '"+strHtmlFoto+"' )";
+
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    mWebView.evaluateJavascript(retFunction, null);
+                                }
+                            });
+                        } catch(Exception ex) {
+                            ex.printStackTrace();
+                        }
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+
+                break;
+        }
     }
 
+    private String getFileName(Uri uri) throws IllegalArgumentException {
+        // Obtain a cursor with information regarding this uri
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        if (cursor.getCount() <= 0) {
+            cursor.close();
+            throw new IllegalArgumentException("Can't obtain file name, cursor is empty");
+        }
+        cursor.moveToFirst();
+        String fileName = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
+        cursor.close();
+        return fileName;
+    }
+
+
+    private File copyToTempFile(Uri uri, File tempFile) throws IOException {
+        // Obtain an input stream from the uri
+        InputStream inputStream = getContentResolver().openInputStream(uri);
+        if (inputStream == null) {
+            throw new IOException("Unable to obtain input stream from URI");
+        }
+        // Copy the stream to the temp file
+        FileUtils.copyInputStreamToFile(inputStream, tempFile);
+        return tempFile;
+    }
 
     private void dispatchTakePictureIntent() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -397,23 +499,90 @@ public class MainActivity extends AppCompatActivity {
             dispatchTakePictureIntent();
         }
 
-
+        @JavascriptInterface
+        public void selecionarFoto(String idHtmlFoto) {
+            Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+            chooseFile.setType("*/*");
+            chooseFile = Intent.createChooser(chooseFile, "Choose a file");
+            startActivityForResult(chooseFile, PICKFILE_RESULT_CODE);
+        }
 
         @JavascriptInterface
         public void abrirDialogoFirma(String idHtmlFoto) {
-
-
 
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             ViewGroup viewGroup = findViewById(android.R.id.content);
             View dialogView = LayoutInflater.from( getApplicationContext() ).inflate(R.layout.firma_dialog, viewGroup, false);
             builder.setView(dialogView);
+            builder.setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    //getting the bitmap from DrawView class
+                    Bitmap bmp=paint.save();
+                    //opening a OutputStream to write into the file
+                    OutputStream imageOutStream = null;
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    bmp.compress(Bitmap.CompressFormat.PNG, 20, byteArrayOutputStream);
+                    byte[] byteArray = byteArrayOutputStream.toByteArray();
+                    Log.d("size d:", String.valueOf(byteArray.length));
+                    String imgageBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                    try {
+                        final String retFunction = "javascript:mostrarFoto('"+URLEncoder.encode(imgageBase64, "UTF-8")+"' , '"+idHtmlFoto+"' )";
+
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                mWebView.evaluateJavascript(retFunction, null);
+                            }
+                        });
+                    } catch(Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            })
+            .setNegativeButton("Guardar", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    //getting the bitmap from DrawView class
+                    Bitmap bmp=paint.save();
+                    //opening a OutputStream to write into the file
+                    OutputStream imageOutStream = null;
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    bmp.compress(Bitmap.CompressFormat.PNG, 20, byteArrayOutputStream);
+                    byte[] byteArray = byteArrayOutputStream.toByteArray();
+                    Log.d("size d:", String.valueOf(byteArray.length));
+                    String imgageBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                    try {
+                        final String retFunction = "javascript:mostrarFoto('"+URLEncoder.encode(imgageBase64, "UTF-8")+"' , '"+idHtmlFoto+"' )";
+
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                mWebView.evaluateJavascript(retFunction, null);
+                            }
+                        });
+                    } catch(Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            });
+
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
+            alertDialog.getWindow().setLayout(640, 480);
 
-            RelativeLayout layout1 = (RelativeLayout) findViewById(R.id.layoutFirma);
-            Lienzo fondo = new Lienzo(getApplicationContext());
-            layout1.addView(fondo);
+            paint = (DrawView) alertDialog.findViewById(R.id.draw_view);
+            //pass the height and width of the custom view to the init method of the DrawView object
+            ViewTreeObserver vto = paint.getViewTreeObserver();
+            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+
+                    paint.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    int width = paint.getMeasuredWidth();
+                    int height = paint.getMeasuredHeight();
+                    paint.init(height, width);
+                }
+            });
+
+
+
         }
 
 
@@ -531,22 +700,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    class Lienzo extends View {
-
-        public Lienzo(Context context) {
-            super(context);
-        }
-
-        protected void onDraw(Canvas canvas) {
-            canvas.drawRGB(255, 255, 0);
-            int ancho = canvas.getWidth();
-            Paint pincel1 = new Paint();
-            pincel1.setARGB(255, 255, 0, 0);
-            canvas.drawLine(0, 30, ancho, 30, pincel1);
-            pincel1.setStrokeWidth(4);
-            canvas.drawLine(0, 60, ancho, 60, pincel1);
-        }
-    }
 
 
 }

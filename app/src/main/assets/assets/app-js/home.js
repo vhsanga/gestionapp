@@ -89,22 +89,14 @@ function initAcciones(){
         guardarTab8();
     });
     $("#btnRepetirFirma1").on("click", function(event){
-        Android.abrirDialogoFirma('imgPersona');
-        /*limpiarFirma1();
-        $("#contF1").empty();
-        $("#contF1").html('<canvas id="firma1"></canvas>');
-        initVariablesF1();
-        eventosF1();*/
+        Android.abrirDialogoFirma('firma1');
     });
     $("#btnRepetirFirma2").on("click", function(event){
-        limpiarFirma2();
-        $("#contF2").empty();
-        $("#contF2").html('<canvas id="firma2"></canvas>');
-        initVariablesF2();
-        eventosF2();
+        Android.abrirDialogoFirma('firma2');
     });
     $("#btnFotoPersona").on("click", function(event){
-        Android.tomarFoto('imgPersona');
+        //Android.tomarFoto('imgPersona');
+        Android.selecionarFoto('imgPersona');
     });
 
     $("#btnFotoDomicilio").on("click", function(event){
@@ -637,7 +629,21 @@ function guardarTab6(){
 
 
 
-function guardarTab7(){    
+function guardarTab7(){
+    var imgHtml= [];
+    var tipoImagen= [];
+    imgHtml.push("firma1");
+    tipoImagen.push("FIRSOL");
+    imgHtml.push("firma2");
+    tipoImagen.push("FIGAR");
+
+    guardarImagenes(imgHtml, tipoImagen, 0, function(){
+       _mostrarMensajeExito("Se han guardado las Firmas.", function(){
+
+       });
+    } )
+
+/*
     var firma1 = document.getElementById('firma1');
     var firma2 = document.getElementById('firma2');
     console.log(firma1)
@@ -684,7 +690,7 @@ function guardarTab7(){
                 }  
             });
         });
-    });
+    });*/
 
 
 }
@@ -848,8 +854,8 @@ function guardarTab9(){
 function guardarImagenes(imgHtml, tipoImagen, i,  callback){
     let img = document.getElementById(imgHtml[i]);
     let canvas = document.createElement('canvas');
-    canvas.width = img.clientWidth;
-    canvas.height = img.clientHeight;
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
     let context = canvas.getContext('2d');
     context.drawImage(img, 0, 0);
     canvas.toBlob(function(blob) {
