@@ -162,18 +162,18 @@ public class MainActivity extends AppCompatActivity {
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
                 request.setTitle(URLUtil.guessFileName(url, contentDisposition, mimetype));
-                request.setDescription("Downloading file...");
+                request.setDescription("Descargando...");
                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                 request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(url, contentDisposition, mimetype));
                 DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
                 dm.enqueue(request);
-                Toast.makeText(getApplicationContext(), "Downloading...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Descargando...", Toast.LENGTH_SHORT).show();
                 registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
             }
             BroadcastReceiver onComplete = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    Toast.makeText(getApplicationContext(), "Downloading Complete", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Descarga Completa", Toast.LENGTH_SHORT).show();
                 }
             };
         });
@@ -296,8 +296,18 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        mWebView.saveState(bundle);
+    }
 
-
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState)
+    {
+        super.onRestoreInstanceState(savedInstanceState);
+        mWebView.restoreState(savedInstanceState);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -351,6 +361,33 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case PICKFILE_RESULT_CODE:
                 if (resultCode == -1) {
+                    Uri selectedImage = data.getData();
+                    try {
+                        // Do whatever you want with this bitmap (image)
+                        Bitmap bitmapImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                        Log.i("Image Path", selectedImage.getPath());
+                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                        bitmapImage.compress(Bitmap.CompressFormat.PNG, 20, byteArrayOutputStream);
+                        byte[] byteArray = byteArrayOutputStream.toByteArray();
+                        Log.d("size d:", String.valueOf(byteArray.length));
+                        String imgageBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        try {
+                            final String retFunction = "javascript:mostrarFoto('"+URLEncoder.encode(imgageBase64, "UTF-8")+"' , '"+strHtmlFoto+"' )";
+
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    mWebView.evaluateJavascript(retFunction, null);
+                                }
+                            });
+                        } catch(Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    /*
                     Uri uri = data.getData();
                     String fileName = getFileName(uri);
 
@@ -392,7 +429,7 @@ public class MainActivity extends AppCompatActivity {
 
                     } catch (IOException e) {
                         e.printStackTrace();
-                    }
+                    }*/
 
 
                 }
@@ -501,6 +538,7 @@ public class MainActivity extends AppCompatActivity {
 
         @JavascriptInterface
         public void selecionarFoto(String idHtmlFoto) {
+            strHtmlFoto = idHtmlFoto;
             Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
             chooseFile.setType("*/*");
             chooseFile = Intent.createChooser(chooseFile, "Choose a file");

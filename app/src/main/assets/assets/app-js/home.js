@@ -7,6 +7,16 @@ var numFotoDomicilio=0;
 var modalProducto = M.Modal.init(document.querySelector('#modalProducto'), {dismissible: false,});
 var modalUbicacion = M.Modal.init(document.querySelector('#modalUbicacion'), {dismissible: false,});
 var dropPersona = M.Dropdown.init(document.querySelector('#dropPersonaMenu'), {});
+var dropPersonaImagen = M.Dropdown.init(document.querySelector('#dropPersonaImagen'), {});
+var dropCedulaAnversoSolicitante = M.Dropdown.init(document.querySelector('#dropCedulaAnversoSolicitante'), {});
+var dropCedulaReversoSolicitante = M.Dropdown.init(document.querySelector('#dropCedulaReversoSolicitante'), {});
+var dropServicioSolicitante = M.Dropdown.init(document.querySelector('#dropServicioSolicitante'), {});
+var dropCedulaAnversoGarante = M.Dropdown.init(document.querySelector('#dropCedulaAnversoGarante'), {});
+var dropCedulaReversoGarante = M.Dropdown.init(document.querySelector('#dropCedulaReversoGarante'), {});
+var dropServicioGarante = M.Dropdown.init(document.querySelector('#dropServicioGarante'), {});
+var dropImgAux1 = M.Dropdown.init(document.querySelector('#dropImgAux1'), {});
+var dropImgAux2 = M.Dropdown.init(document.querySelector('#dropImgAux2'), {});
+var dropImgAux3 = M.Dropdown.init(document.querySelector('#dropImgAux3'), {});
 
 var tablaProductos;
 
@@ -95,10 +105,11 @@ function initAcciones(){
         Android.abrirDialogoFirma('firma2');
     });
     $("#btnFotoPersona").on("click", function(event){
-        //Android.tomarFoto('imgPersona');
+        Android.tomarFoto('imgPersona');
+    });
+    $("#btnSelImgPersona").on("click", function(event){
         Android.selecionarFoto('imgPersona');
     });
-
     $("#btnFotoDomicilio").on("click", function(event){
         numFotoDomicilio++;
         if(numFotoDomicilio <= 3){
@@ -108,41 +119,67 @@ function initAcciones(){
         }                
     });
 
-
     $("#btnCedulaAnversoSolicitante").on("click", function(event){
         Android.tomarFoto('imgCedulaAnversoSolicitante');
+    });
+    $("#btnSelCedulaAnversoSolicitante").on("click", function(event){
+        Android.selecionarFoto('imgCedulaAnversoSolicitante');
     });
 
     $("#btnCedulaReversoSolicitante").on("click", function(event){
         Android.tomarFoto('imgCedulaReversoSolicitante');
     });
+    $("#btnSelCedulaReversoSolicitante").on("click", function(event){
+        Android.selecionarFoto('imgCedulaReversoSolicitante');
+    });
 
     $("#btnServicioSolicitante").on("click", function(event){
         Android.tomarFoto('imgServicioSolicitante');
+    });
+    $("#btnSelServicioSolicitante").on("click", function(event){
+        Android.selecionarFoto('imgServicioSolicitante');
     });
 
     $("#btnCedulaAnversoGarante").on("click", function(event){
         Android.tomarFoto('imgCedulaAnversoGarante');
     });
+    $("#btnSelCedulaAnversoGarante").on("click", function(event){
+        Android.selecionarFoto('imgCedulaAnversoGarante');
+    });
 
     $("#btnCedulaReversoGarante").on("click", function(event){
         Android.tomarFoto('imgCedulaReversoGarante');
+    });
+    $("#btnSelCedulaReversoGarante").on("click", function(event){
+        Android.selecionarFoto('imgCedulaReversoGarante');
     });
 
     $("#btnServicioGarante").on("click", function(event){
         Android.tomarFoto('imgServicioGarante');
     });
+    $("#btnSelServicioGarante").on("click", function(event){
+        Android.selecionarFoto('imgServicioGarante');
+    });
 
     $("#btnImgAux1").on("click", function(event){
         Android.tomarFoto('imgAux1');
+    });
+    $("#btnSelImgAux1").on("click", function(event){
+        Android.selecionarFoto('imgAux1');
     });
 
     $("#btnImgAux2").on("click", function(event){
         Android.tomarFoto('imgAux2');
     });
+    $("#btnSelImgAux2").on("click", function(event){
+        Android.selecionarFoto('imgAux2');
+    });
 
     $("#btnImgAux3").on("click", function(event){
         Android.tomarFoto('imgAux3');
+    });
+    $("#btnSelImgAux3").on("click", function(event){
+        Android.selecionarFoto('imgAux3');
     });
 
     $("#btnAddReferencia").on("click", function(event){
@@ -731,6 +768,9 @@ function guardarTab8(){
 
 
 function mostrarFoto(strBase64, html){
+    console.log("mostrar fotos")
+    console.log(html)
+    console.log(strBase64)
     $("#"+html).attr("src", "data:image/png;base64,"+strBase64);
 }
 
