@@ -1,0 +1,233 @@
+<html>
+    <head>
+	<title>Disnova</title>
+      <!--Import Google Icon Font-->
+      <link type="text/css" rel="stylesheet" href="./materialize-css/dist/css/icons.css"/>
+      <link type="text/css" rel="stylesheet" href="./materialize-css/dist/css/materialize.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="./assets/css/estilo.css"/>
+      <link type="text/css" rel="stylesheet" href="./materialize-css/dist/css/jquery.dataTables.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	  
+    </head>
+
+<body>
+	
+	<header id="areaNav"></header>
+	
+	<main>
+	  <div class="container">
+      <h5>Usuarios</h5>
+      <div class="card">
+        <div class="row">              
+          <button  id="btnAddUsuario"  class="btn grey right" type="button"> <i class="material-icons">group_add</i> Crear Nuevo Usuario </button>
+        </div>
+        <div class="row">
+          <table id="tablaUsuarios" style="width: 100%;" class="striped">
+            <thead>
+              <tr>
+                  <th style="width: 80px;">User</th> 
+                  <th  style="width: 300px;" >Nombres</th> 
+                  <th>Rol</th> 
+                  <th style="width: 80px;">Estado</th> 
+                  <th style="width: 320px;">Acción</th> 
+              </tr>
+            </thead>
+          </table> 
+        </div>
+        <div class="row"></div>
+        <div class="row"></div>
+      </div>
+    </div>
+  </main>
+
+
+  <div id="modalUsuario" class="modal"> 
+    <div class="modal-content"> 
+
+      <h4><i class="material-icons">group_add</i> Crear Usuario</h4>
+      <form id="frmPersona">            
+        <input name="id" type="hidden" class="_formJSON" value="0" />        
+
+        <div class="row">
+          <div class="input-field col s4">
+            <input id="nombres" name="nombres" type="text" class="validate _formJSON" required="true">
+            <label for="nombres">Nombres</label>
+          </div>
+          <div class="input-field col s4">
+            <input id="apellidos" name="apellidos" type="text" class="validate _formJSON" required="true">
+            <label for="apellidos">Apellidos</label>
+          </div>
+          <div class="input-field col s4">
+            <input id="email" name="email" type="email" class="validate _formJSON" required="true">
+            <label for="email">Correo Electronico</label>
+          </div>
+        </div>
+     
+      </form>
+      <div class="row">                              
+        <div class="input-field col s1"></div>
+        <div class="input-field col s5">
+          <form id="frmUsuario" >
+            <input name="id" type="hidden" class="_formJSON" value="0" />
+            <input id="user" name="user" type="text" class="validate _formJSON" required="true">
+            <label for="user">Nombre de usuario</label>
+          </form>
+        </div>  
+
+        <div class="input-field col s5">
+          <form id="frmUsuarioRol" >
+            <select id="idrol"  name="idrol"  class="_formJSON" required="true">
+              <option value="" disabled selected>Escoja un Rol</option>
+            </select>
+          </form>
+        </div>                 
+      </div>      
+
+      <div class="row"></div>
+      <div class="row"></div>
+    </div> 
+    <div class="modal-footer"> 
+        <button id="btnCrearUsuario" class="btn waves-effect waves-green green"> <i class="medium material-icons">check</i> Crear Usuario</button> 
+        <button id="btnCancelarCrear" class="btn waves-effect waves-green red modal-close"> <i class="medium material-icons">close</i> Cancelar</button>             
+    </div> 
+</div>
+
+<div id="modalCambiarRol" class="modal"> 
+  <div class="modal-content"> 
+
+    <h4><i class="material-icons">group</i> Cambiar Rol</h4>
+
+      <div class="row">
+        <div class="input-field col s4">
+          <b>Nombres:</b>
+          <p id="nombres_"></label>
+        </div>
+        <div class="input-field col s4">
+          <b>Usuario:</b>
+          <p id="usuario_"></label>
+        </div>
+        <div class="input-field col s4">
+          <b>Rol Actual:</b>
+          <p id="rola_"></label>
+        </div>
+      </div>
+   
+      <div class="row">                
+        <div class="input-field col s4"></div>              
+        <div class="input-field col s4">
+          <form id="frmUsuarioRolMod" >
+            <input id="idusuario_" name="idusuario" type="hidden" class="_formJSON" value="" />
+            <input name="activo" type="hidden" class="_formJSON" value="1" />
+            <select id="idrol_"  name="idrol"  class="_formJSON" required="true">
+              <option value="" disabled selected>Escoja un nuevo Rol</option>
+            </select>
+          </form>
+        </div>                 
+      </div>      
+
+      <div class="row"></div>
+      <div class="row"></div>
+  </div> 
+  <div class="modal-footer"> 
+      <button id="btnCambiarRol" class="btn waves-effect waves-green"> <i class="medium material-icons">check</i> Guardar Cambios</button> 
+      <button class="btn grey waves-effect waves-green modal-close"> <i class="medium material-icons">close</i> Cancelar</button>             
+  </div> 
+</div>
+
+
+
+<div id="modalBloquear" class="modal"> 
+  <div class="modal-content">            
+      <h4><i class="material-icons">lock</i> Bloquear o Desbloquear</h4>
+      <form id="frmMostrarBloquear" >
+        <div class="row">
+          <div class="input-field col s4">
+            <b>Nombres:</b>
+            <p id="nombres_"></label>
+          </div>
+          <div class="input-field col s4">
+            <b>Usuario:</b>
+            <p id="usuario_"></label>
+          </div>
+          <div class="input-field col s4">
+            <b>Estado Actual:</b>
+            <p id="estado_"></label>          
+          </div>
+        </div>
+      </form>
+
+      <div class="row">                
+        <div class="input-field col s4"></div>              
+        <div class="input-field col s4">
+          <form id="frmBloquear" >     
+            <input id="idrol_act" type="hidden" />
+            <input id="idusuario_" name="id" type="hidden" class="_formJSON" value="" />       
+            <select  name="estadodetalle"  class="_formJSON" required="true">
+              <option value="" disabled selected>Escoja una opcion</option>
+              <option value="BLOC">BLOQUEAR</option>
+              <option value="ACT">ACTIVAR</option>
+            </select>
+          </form>
+        </div>                 
+      </div>   
+
+      <div class="row"></div>
+      <div class="row"></div>
+  </div> 
+  <div class="modal-footer"> 
+      <button id="btnBloquear" class="btn waves-effect waves-green"> <i class="medium material-icons">check</i> Guardar Cambios</button> 
+      <button class="btn waves-effect waves-green modal-close grey"> <i class="medium material-icons">close</i> Cancelar</button>             
+  </div> 
+</div>
+
+
+<div id="modalEliminar" class="modal"> 
+  <div class="modal-content">            
+      <h4><i class="material-icons">delete_forever</i> Eliminar Usuario</h4>
+      <form id="frmMostrarEliminar" >
+        <input id="id" name="id" type="hidden" class="_formJSON" value="0" />
+        <div class="row">
+          <div class="input-field col s2"></div> 
+          <div class="input-field col s4">
+            <b>Nombres:</b>
+            <p id="nombres_"></label>
+          </div>
+          <div class="input-field col s4">
+            <b>Usuario:</b>
+            <p id="usuario_"></label>
+          </div>
+
+        </div>
+      </form>
+
+      <div class="row">                
+        <div class="input-field col s4"></div>              
+        <div class="input-field col s4">
+          <p>¿Está Seguro que desea Eliminar a este usuario?</p>
+        </div>                 
+      </div>   
+
+      <div class="row"></div>
+  </div> 
+  <div class="modal-footer"> 
+      <button id="btnEliminar" class="btn waves-effect waves-green"> <i class="medium material-icons">check</i>Si, Eliminar</button> 
+      <button class="btn waves-effect waves-green modal-close grey"> <i class="medium material-icons">close</i> Cancelar</button>             
+  </div> 
+</div>
+
+
+  <!-- Modal Structure -->
+  <div id="areaAux" ></div>
+
+  
+
+  <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="./materialize-css/dist/js/jquery.min.js"></script>  
+  <script type="text/javascript" src="./materialize-css/dist/js/materialize.min.js"></script>
+  <script type="text/javascript" src="./assets/app-js/_util.js"></script>
+  <script type="text/javascript" src="./materialize-css/dist/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" src="./assets/app-js/usuarios.js"></script>
+</body>
+</html>

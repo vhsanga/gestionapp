@@ -1,0 +1,106 @@
+<html>
+    <head>
+	<title>Disnova</title>
+      <!--Import Google Icon Font-->
+      <link type="text/css" rel="stylesheet" href="./materialize-css/dist/css/icons.css"/>
+      <link type="text/css" rel="stylesheet" href="./materialize-css/dist/css/materialize.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="./assets/css/estilo.css"/>
+      
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	  
+    </head>
+
+<body>
+	
+	<header id="areaNav"></header>
+	
+	<main>
+	  <div class="container">
+      <h5>Mis datos</h5>
+
+      <div class="row">
+        <div class="col s6 card">  
+          <form id="frmUsuario">
+            <div class="row">
+              <table border="0">
+                <tr>
+                  <td rowspan="3">
+                    <center><i class="material-icons" style="font-size: 75px;  color: #a5d6a7;">person</i></center>
+                  </td>
+                  <td><b>Usuario:</b> <span id="user"></span> </td>
+                  
+                </tr>
+                <tr>
+                  <td><b>Rol:</b> <span id="rol"></span></td>
+                </tr>
+                <tr>
+                  <td><b>Desde:</b> <span id="fingreso"></span></td>
+                </tr>
+              </table>
+
+            </div>
+          </form>          
+        </div>  
+      </div>
+
+      
+      
+      <div class="card">
+        <div class="row">
+          <form id="frmMisDatos" class="col s12">
+            <input id="id" name="id" type="hidden" value="0" class="_formJSON" />
+            <div class="row">
+              <div class="col s3"></div>
+              <div class="input-field col s6">
+                <input  id="nombres" name="nombres" type="text" class="validate _formJSON" required="true" maxlength="64">
+                <label for="nombres">Nombres</label>
+              </div>
+            </div>
+            <div class="row">  
+              <div class="col s3"></div>
+              <div class="input-field col s6">
+                <input id="apellidos" name="apellidos" type="text" class="validate _formJSON"  required="true" maxlength="64">
+                <label for="apellidos">Apellidos</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s3"></div>
+              <div class="input-field col s6">
+                <input id="identificacion" name="identificacion" type="number" class="validate _formJSON"  required="true" maxlength="13">
+                <label for="identificacion">Cédula</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s3"></div>
+              <div class="input-field col s6">
+                <input id="email" name="email" type="email" class="validate _formJSON"  required="true" maxlength="64">
+                <label for="email">Email</label>
+              </div>
+            </div>
+            <div class="row">
+              <center>
+                <button id="btnGuardarMisDatos" type="button" class="btn btn-large"> <i class="material-icons">check</i> Actualizar Msis Datos </button>
+              </center>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+
+
+  <!-- Modal Structure -->
+  <div id="areaAux" ></div>
+
+
+  <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="./materialize-css/dist/js/jquery.min.js"></script>  
+  <script type="text/javascript" src="./materialize-css/dist/js/materialize.min.js"></script>
+  <script type="text/javascript" src="./assets/app-js/_util.js"></script>
+  <script type="text/javascript" src="./assets/app-js/misdatos.js"></script>
+</body>
+</html>

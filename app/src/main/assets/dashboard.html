@@ -1,0 +1,157 @@
+<html>
+    <head>
+	<title>Disnova</title>
+      <!--Import Google Icon Font-->
+      <link type="text/css" rel="stylesheet" href="./materialize-css/dist/css/icons.css"/>
+      <link type="text/css" rel="stylesheet" href="./materialize-css/dist/css/materialize.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="./assets/css/estilo.css"/>
+      
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	  
+    </head>
+
+<body>
+	
+	<header id="areaNav"></header>
+	
+	<main>
+	  <div class="container">
+      <h5></h5>
+      <div class="row"></div>
+     
+
+      <div class="row">
+        <div style="text-align: center;">
+          <i class="material-icons" style="font-size: 120px;  color: #8bc34a;">blur_on</i>
+          <h3 style="color: #9e9e9e;  font-family: system-ui;  ">Bienvenido</h3>
+          <p style=" font-size: 28px;  color: #9e9e9e;  font-family: system-ui;  ">App de Gestión de Solicitudes de Créditos</p>
+          <hr />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s6 card" style="padding: 28px;">  
+          <form id="frmUsuario">
+            <div class="row">
+              <h5>Mi usuario</h5>
+              <table border="0">
+                <tr>
+                  <td rowspan="3">
+                    <center><i class="material-icons" style="font-size: 75px;  color: #8bc34a;">person</i></center>
+                  </td>
+                  <td><b>Usuario:</b> <span id="user"></span> </td>
+                  
+                </tr>
+                <tr>
+                  <td><b>Rol:</b> <span id="rol"></span></td>
+                </tr>
+                <tr>
+                  <td><b>Desde:</b> <span id="fingreso"></span></td>
+                </tr>
+              </table>
+
+            </div>
+            <div class="row"></div>
+          </form>                        
+        </div>  
+        <div class="col s1"></div>
+        <div class="col s5 card" style="padding: 22px;">  
+          <form id="frmSolicitudes">
+            <div class="row">
+              <h5>Mis créditos</h5>
+              <table border="0">
+                <tr>
+                  <td rowspan="4">
+                    <center><i class="material-icons" style="font-size: 75px;  color: #2196f3">assignment</i></center>
+                  </td>
+                  <td style="text-align: right; padding-right: 10px;"><b>Aprobadas:</b> <span id="aprobadas"></span> </td>                  
+                </tr>
+                <tr>
+                  <td style="text-align: right; padding-right: 10px;"><b>Negadas:</b> <span id="negadas"></span></td>
+                </tr>
+                <tr>
+                  <td style="text-align: right; padding-right: 10px;"><b>Pendientes:</b> <span id="ingresadas"></span></td>
+                </tr>
+                <tr>
+                  <td style="text-align: right; padding-right: 10px;"><b>Total:</b> <span id="total"></span></td>
+                </tr>
+              </table>
+
+            </div>
+          </form>                        
+        </div> 
+      </div>
+
+
+
+      <div class="row" id="areaAdmin">
+        <div class="col s6">
+          <div class="card-panel teal">
+            <div class="row no-gutters align-items-center">
+              <div class="col s8">
+                <form id="frmSolicitudesValor">
+                  <p class="text-primary panel">
+                      Creditos Aprobados <br /> <span id="total" class="text-primary panel2"></span> </p>                  
+                </form>
+              </div>
+              <div class="col s4">
+                  <i class="material-icons" style="font-size: 75px;  color: #ffeb3b;">attach_money</i>
+              </div>
+          </div>
+          </div>
+        </div>
+        <div class="col s1"></div>
+        <div class="col s5">
+          <div class="card-panel orange darken-4">
+            <div class="row no-gutters align-items-center">
+              <div class="col s8">
+                  <p class="text-primary panel2"> Total de Creditos </p>                                                     
+              </div>
+              <div class="col s4">
+                  <i class="material-icons" style="font-size: 75px;  color: #ffeb3b;">attach_money</i>
+              </div>
+            </div>
+            <div class="row">
+              <form id="frmSolicitudesGeneral">
+                <div class="collection">
+                  <a href="#!" class="collection-item"><span class="badge" id="ingresadas">1</span>Pendientes:</a>
+                  <a href="#!" class="collection-item"><span class="badge" id="aprobadas" >4</span>Aprobados</a>
+                  <a href="#!" class="collection-item"><span class="badge" id="negadas" >4</span>Negados</a>                
+                  <a href="#!" class="collection-item"><span class="badge" id="total">14</span>TOTAL</a>
+                </div> 
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+    </div>
+  </main>
+
+  <footer class="page-footer" style="    background-color: #9e9e9e; opacity: 0.6;">
+    <div class="row" id="frow" style="margin-bottom:0px;">
+      <div class="col s12" style="padding-left:0px!important;padding-right:0px!important; text-align: center;">
+        <p>Desarrollado por nodoclic Copyright ©. Derechos reservados </p>
+      </div>
+    </div>
+  </footer>
+
+
+
+  <!-- Modal Structure -->
+  <div id="areaAux" ></div>
+
+
+  <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="./materialize-css/dist/js/jquery.min.js"></script>  
+  <script type="text/javascript" src="./materialize-css/dist/js/materialize.min.js"></script>
+  <script type="text/javascript" src="./assets/app-js/_util.js"></script>
+  <script type="text/javascript" src="./assets/app-js/dashboard.js"></script>
+</body>
+</html>

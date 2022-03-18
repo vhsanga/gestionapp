@@ -1,0 +1,76 @@
+<html>
+    <head>
+	<title>Disnova</title>
+      <!--Import Google Icon Font-->
+      <link type="text/css" rel="stylesheet" href="./materialize-css/dist/css/icons.css"/>
+      <link type="text/css" rel="stylesheet" href="./materialize-css/dist/css/materialize.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="./assets/css/estilo.css"/>
+      <link type="text/css" rel="stylesheet" href="./materialize-css/dist/css/jquery.dataTables.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	  
+    </head>
+
+<body>
+	
+	<header id="areaNav"></header>
+	
+	<main>
+	  <div class="container">
+      <h5>Cambiar Clave</h5>
+      <div class="card">
+        <div class="row">
+          <form class="col s12" method="post">
+            <div class='row'>
+              <div class='col s12'>
+              </div>
+            </div>
+
+
+            <div class='row'>
+              <div class='input-field col s4'></div>
+              <div class='input-field col s4'>
+                <input class='validate' type='password' name='pass' id='pass1' />
+                <label for='pass1'>Contraseña Nueva</label>
+              </div>
+            </div>
+
+            <div class='row'>
+              <div class='input-field col s4'></div>
+              <div class='input-field col s4'>
+                <input class='validate' type='password' name='pass' id='pass2' />
+                <label for='pass2'>Repita la Contraseña</label>
+              </div>
+            </div>
+
+            <br />
+            <center>
+              <div class='row'>
+                <div class='input-field col s4'></div>
+                <div class='input-field col s4'>
+                  <button type='button' id="btnCambiarClave" name='btnCambiarClave' class='col s12 btn btn-large waves-effect'><i class="material-icons">check</i> Cambiar</button>
+                </div>
+              </div>
+            </center>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+
+
+
+
+  <!-- Modal Structure -->
+  <div id="areaAux" ></div>
+
+
+  <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="./materialize-css/dist/js/jquery.min.js"></script>  
+  <script type="text/javascript" src="./materialize-css/dist/js/materialize.min.js"></script>
+  <script type="text/javascript" src="./assets/app-js/_util.js"></script>
+  <script type="text/javascript" src="./assets/app-js/cambiarclave.js"></script>
+</body>
+</html>

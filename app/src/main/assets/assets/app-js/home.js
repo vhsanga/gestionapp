@@ -291,9 +291,36 @@ function initDataTable(){
             { targets: 4, className: 'dt-body-right' ,"render": function ( data, type, row ) {
                 return parseFloat(data).toFixed(2);
                 },
+            },
+            { targets: 5, className: 'dt-body-right' ,"render": function ( data, type, row ) {
+                return '<button class="btn amber"  type="button" onclick="quitarProducto('+row.id+')"><i class="material-icons">close</i></button>';
+                },
             }
           ]
     } );
+}
+
+function quitarProducto(idProducto){
+    var row = tablaProductos.row('#'+idProducto);
+    var dataSend=row.data();
+    if(dataSend == null){
+        return;
+    }
+    dataSend.activo='0';
+    var insert = {  alias:"creditoproducto", tabla:"creditoproducto",  obj:dataSend }
+    var arrayInsert=[insert];
+    _post("/insertar",arrayInsert, function(data){
+        if(data.statusCode == 0){
+            row.remove().draw();
+        }
+        var sum = 0 ;
+        tablaProductos.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+            var p = this.data();
+            sum = sum + parseFloat(p.ptotal);
+        } );
+        $("#valortotal").val( parseFloat($("#valortotal").val()) + parseFloat(sum) );
+        $("#entrada").focus();
+    });
 }
 
 function consultarPersona(){
@@ -319,9 +346,9 @@ function consultarPersona(){
                 if(consultas.datosPersona.length > 0){
                     IDPERSONA =  consultas.datosPersona[0].id;
                     if(consultas.datosPersona[0].estadocivildetalle == "SOL"  || consultas.datosPersona[0].estadocivildetalle == "UNI" ){
-                        $("#liTab3").hide();
+                        $("#linkTest3").hide();
                     }else{
-                        $("#liTab3").show();
+                        $("#linkTest3").show();
                     }               
                 }
             }
@@ -345,6 +372,12 @@ function consultarPersona(){
         if(IDPERSONA > 0 ){
             consultarInfopersona();
             consultarListas();
+        }
+
+        if(IDSOLICITUDCREDITO == 0){
+            _mostrarMensajeExito("La persona "+identificacion+" no tiene ninguna solicitud de Credito, puede ingresar una solicitud");
+        }else{
+            _mostrarMensajeExito("La persona "+identificacion+" ya tiene una solicitud de Credito pendiente, primero debe aprobar la solicitud ingresada");
         }
     });
 
@@ -400,14 +433,14 @@ function guardarTab1(){
                 crearSolicitud();
             }
             if(persona.estadocivildetalle == "SOL"  || persona.estadocivildetalle == "UNI" ){
-               $("#liTab3").hide();
+               $("#linkTest3").hide();
             }else{
-                $("#liTab3").show();
+                $("#linkTest3").show();
             }
             let img = document.getElementById("imgPersona");
             let canvas = document.createElement('canvas');
-            canvas.width = img.clientWidth;
-            canvas.height = img.clientHeight;
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
             let context = canvas.getContext('2d');
             context.drawImage(img, 0, 0);
             canvas.toBlob(function(blob) {
@@ -565,7 +598,7 @@ function guardarTab3(){
 
 
 function crearSolicitud(){    
-    var dataSend = {   estado :  1, idpersona:IDPERSONA, estado:_ESTADOSOLICITUDINGRESADO };              
+    var dataSend = {   estado :  1, idpersona:IDPERSONA, estado:_ESTADOSOLICITUDINGRESADO, idusuario:_jsonUsuario.idusuario };
     var insert = {  alias:"solicitudcredito", tabla:"solicitudcredito",  obj:dataSend }
     var arrayInsert=[insert];
     _post("/insertar",arrayInsert, function(data){
@@ -757,7 +790,7 @@ function guardarTab8(){
     _post("/insertar",arrayInsert, function(data){
         if(data.statusCode == 0){            
             _mostrarMensajeExito("Se han guardado los productos.", function(){
-                $("#linkTest5").click();        
+                $("#linkTest4").click();
             });
         }else{
             _mostrarMensajeError(data.error);  
@@ -768,9 +801,6 @@ function guardarTab8(){
 
 
 function mostrarFoto(strBase64, html){
-    console.log("mostrar fotos")
-    console.log(html)
-    console.log(strBase64)
     $("#"+html).attr("src", "data:image/png;base64,"+strBase64);
 }
 
@@ -835,24 +865,9 @@ function guardarProducto(){
         modalProducto.close();  
         if(data.statusCode == 0){    
             var p=data.data[0].creditoproducto; 
-            _mostrarMensajeExito("Se ha guardado el producto", function(){
-                
-                tablaProductos.rows.add( [p] ).draw();
-                console.log(tablaProductos.rows().data().length)
-                
-                /*$("#tablaProductos").append(
-                '<tr id="'+p.id+'" >'+
-                '  <td >'+p.modelo+'</td>'+
-                '  <td >'+p.descripcion+'</td> '+
-                '  <td class="dt-body-right">'+ parseFloat(p.punitario).toFixed(2)+'</td> '+                
-                '  <td class="dt-body-right">'+p.cantidad+'</td> '+
-                '  <td class="dt-body-right">'+ parseFloat(p.ptotal).toFixed(2)+'</td> '+
-                '</tr>         ');*/
-            });  
+            tablaProductos.rows.add( [p] ).draw();
             $("#valortotal").val( parseFloat($("#valortotal").val()) + parseFloat(p.ptotal) );
             $("#entrada").focus();
-            
-            
            
         }else{
             _mostrarMensajeError(data.error);  
@@ -890,7 +905,6 @@ function guardarTab9(){
     } )
 }
 
-
 function guardarImagenes(imgHtml, tipoImagen, i,  callback){
     let img = document.getElementById(imgHtml[i]);
     let canvas = document.createElement('canvas');
@@ -902,10 +916,21 @@ function guardarImagenes(imgHtml, tipoImagen, i,  callback){
         if(blob == null){
             i++;
             if(i < imgHtml.length ){
-                guardarImagenes(imgHtml, tipoImagen, i++,  callback);                    
+                guardarImagenes(imgHtml, tipoImagen, i++,  callback);
             }else{
                 callback();
             }
+            return;
+        }
+        if(blob.size < 700){
+            i++;
+            if(i < imgHtml.length ){
+                guardarImagenes(imgHtml, tipoImagen, i++,  callback);
+            }else{
+                callback();
+            }
+            console.log('saltar imagen:'+blob.size);
+            return;
         }
         var data = new FormData();
         data.append('idpersona', IDPERSONA);
@@ -917,10 +942,8 @@ function guardarImagenes(imgHtml, tipoImagen, i,  callback){
             i++;
             if(dataRes.statusCode == 0){
                 if(i < imgHtml.length ){
-                    console.log('continuar '+i);
                     guardarImagenes(imgHtml, tipoImagen, i,  callback);
                 }else{
-                    console.log('finalizar '+i);
                     callback();
                 }
             }else{
