@@ -81,7 +81,7 @@ function mostrarDataForm( json){
     modalSolicitud.open();
     $("#frmSolicitudCredito  #nombres").html(json.apellidos+ ' '+json.nombres).focus();   
     $("#comentario").focus();
-    $("#btnDescargarSolicitudCredito").attr("href", URL+"/pdf/"+json.id );
+    $("#btnDescargarSolicitudCredito").attr("href", URL+"/pdf?solicitud="+json.id );
 }
 
 

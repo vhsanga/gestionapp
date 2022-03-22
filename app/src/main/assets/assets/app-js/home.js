@@ -687,7 +687,7 @@ function guardarTab6(){
     _post("/insertar",arrayInsert, function(data){
         if(data.statusCode == 0){            
             _mostrarMensajeExito("Se ha guardado los datos de INGRESOS Y EGRESOS", function(){
-                $("#linkTest7").click();                     
+                $("#linkTest9").click();
             });  
             
         }else{
