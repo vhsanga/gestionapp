@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        if (!permissionRequestList.isEmpty()) {
+        /*if (!permissionRequestList.isEmpty()) {
             final String[] results = new String[permissionRequestList.size()];
             permissionRequestList.toArray(results);
 
@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
             });
             AlertDialog dialog = builder.create();
             dialog.show();
-        }
+        }*/
     }
 
     @Override
@@ -327,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            int scaleFactor = 4;
+            int scaleFactor = 8;
             Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, originalBitmap.getWidth()/scaleFactor,
                     originalBitmap.getHeight()/scaleFactor, true);
             Matrix m = new Matrix();

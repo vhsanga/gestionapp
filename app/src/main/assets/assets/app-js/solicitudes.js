@@ -70,7 +70,8 @@ function initAcciones(){
     $("#btnNegarSolicitud").on("click", function(event){
         guardarSolicitud("NEG");
     });
-    
+
+
 }
 
 function mostrarDataForm( json){
@@ -81,7 +82,16 @@ function mostrarDataForm( json){
     modalSolicitud.open();
     $("#frmSolicitudCredito  #nombres").html(json.apellidos+ ' '+json.nombres).focus();   
     $("#comentario").focus();
-    $("#btnDescargarSolicitudCredito").attr("href", URL+"/pdf?solicitud="+json.id );
+
+    $("#btnDescargarSolicitudCredito").unbind();
+    $("#btnDescargarSolicitudCredito").on("click", function(event){
+        _mostrarMensajeConfirmacion("¿Desea generar el Reportge PDF?, esto podria tardar varios minutos",function(){
+             _mostrarMensajeInfo("Espere mientras se genere el reporte, esto tardara varios minutos.");
+             location.href=URL+"/pdf?solicitud="+json.id;
+        });
+
+    });
+    //$("#btnDescargarSolicitudCredito").attr("href", URL+"/pdf?solicitud="+json.id );
 }
 
 
