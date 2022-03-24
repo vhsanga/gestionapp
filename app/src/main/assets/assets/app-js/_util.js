@@ -84,6 +84,16 @@ function _consultarEntidad(jsonConsulta, callback){
     });
 }
 
+function _consultarImagen(jsonConsulta, callback){
+    _post("/consultarimagen",jsonConsulta, function(data){
+        if(data.statusCode == 0){
+            callback(data);
+        }else{
+            _mostrarMensajeError(data.error);
+        }
+    });
+}
+
 
 function _post(path, jsonSend, callback){
     $.ajax({

@@ -105,82 +105,122 @@ function initAcciones(){
         Android.abrirDialogoFirma('firma2');
     });
     $("#btnFotoPersona").on("click", function(event){
-        Android.tomarFoto('imgPersona');
+        Android.tomarFoto('imgPersona', 8);
     });
     $("#btnSelImgPersona").on("click", function(event){
         Android.selecionarFoto('imgPersona');
     });
+    $("#btnVerImgPersona").on("click", function(event){
+        var idHtml = ["imgPersona"];
+        consultarImagen('IMGPER', idHtml);
+    });
     $("#btnFotoDomicilio").on("click", function(event){
         numFotoDomicilio++;
         if(numFotoDomicilio <= 3){
-            Android.tomarFoto('imgDireccion'+numFotoDomicilio);
+            Android.tomarFoto('imgDireccion'+numFotoDomicilio, 5);
         }else{
             M.toast({html: "Solo puede tomar hasta tres fotos", displayLength:5000});  
         }                
     });
 
     $("#btnCedulaAnversoSolicitante").on("click", function(event){
-        Android.tomarFoto('imgCedulaAnversoSolicitante');
+        Android.tomarFoto('imgCedulaAnversoSolicitante',8);
     });
     $("#btnSelCedulaAnversoSolicitante").on("click", function(event){
         Android.selecionarFoto('imgCedulaAnversoSolicitante');
     });
+    $("#btnVerCedulaAnversoSolicitante").on("click", function(event){
+        var idHtml = ["imgCedulaAnversoSolicitante"];
+        consultarImagen('CEDAS', idHtml);
+     });
 
     $("#btnCedulaReversoSolicitante").on("click", function(event){
-        Android.tomarFoto('imgCedulaReversoSolicitante');
+        Android.tomarFoto('imgCedulaReversoSolicitante',8);
     });
     $("#btnSelCedulaReversoSolicitante").on("click", function(event){
         Android.selecionarFoto('imgCedulaReversoSolicitante');
     });
+    $("#btnVerCedulaReversoSolicitante").on("click", function(event){
+        var idHtml = ["imgCedulaReversoSolicitante"];
+        consultarImagen('CEDRS', idHtml);
+     });
 
     $("#btnServicioSolicitante").on("click", function(event){
-        Android.tomarFoto('imgServicioSolicitante');
+        Android.tomarFoto('imgServicioSolicitante',5);
     });
     $("#btnSelServicioSolicitante").on("click", function(event){
         Android.selecionarFoto('imgServicioSolicitante');
     });
+    $("#btnVerServicioSolicitante").on("click", function(event){
+        var idHtml = ["imgServicioSolicitante"];
+        consultarImagen('SERSOL', idHtml);
+     });
 
     $("#btnCedulaAnversoGarante").on("click", function(event){
-        Android.tomarFoto('imgCedulaAnversoGarante');
+        Android.tomarFoto('imgCedulaAnversoGarante',8);
     });
     $("#btnSelCedulaAnversoGarante").on("click", function(event){
         Android.selecionarFoto('imgCedulaAnversoGarante');
     });
+    $("#btnVerCedulaAnversoGarante").on("click", function(event){
+        var idHtml = ["imgCedulaAnversoGarante"];
+        consultarImagen('CEDAG', idHtml);
+     });
 
     $("#btnCedulaReversoGarante").on("click", function(event){
-        Android.tomarFoto('imgCedulaReversoGarante');
+        Android.tomarFoto('imgCedulaReversoGarante',8);
     });
     $("#btnSelCedulaReversoGarante").on("click", function(event){
         Android.selecionarFoto('imgCedulaReversoGarante');
     });
+    $("#btnVerCedulaReversoGarante").on("click", function(event){
+        var idHtml = ["imgCedulaReversoGarante"];
+        consultarImagen('CEDRG', idHtml);
+     });
 
     $("#btnServicioGarante").on("click", function(event){
-        Android.tomarFoto('imgServicioGarante');
+        Android.tomarFoto('imgServicioGarante', 5);
     });
     $("#btnSelServicioGarante").on("click", function(event){
         Android.selecionarFoto('imgServicioGarante');
     });
+    $("#btnVerServicioGarante").on("click", function(event){
+        var idHtml = ["imgServicioGarante"];
+        consultarImagen('SERGAR', idHtml);
+     });
 
     $("#btnImgAux1").on("click", function(event){
-        Android.tomarFoto('imgAux1');
+        Android.tomarFoto('imgAux1',5);
     });
     $("#btnSelImgAux1").on("click", function(event){
         Android.selecionarFoto('imgAux1');
     });
+    $("#btnVerImgAux1").on("click", function(event){
+        var idHtml = ["imgAux1"];
+        consultarImagen('AUX1', idHtml);
+     });
 
     $("#btnImgAux2").on("click", function(event){
-        Android.tomarFoto('imgAux2');
+        Android.tomarFoto('imgAux2',5);
     });
     $("#btnSelImgAux2").on("click", function(event){
         Android.selecionarFoto('imgAux2');
     });
+    $("#btnVerImgAux2").on("click", function(event){
+        var idHtml = ["imgAux2"];
+        consultarImagen('AUX2', idHtml);
+     });
 
     $("#btnImgAux3").on("click", function(event){
-        Android.tomarFoto('imgAux3');
+        Android.tomarFoto('imgAux3',5);
     });
     $("#btnSelImgAux3").on("click", function(event){
         Android.selecionarFoto('imgAux3');
     });
+    $("#btnVerImgAux3").on("click", function(event){
+        var idHtml = ["imgAux3"];
+        consultarImagen('AUX3', idHtml);
+     });
 
     $("#btnAddReferencia").on("click", function(event){
         if(numReferencias < numReferenciasMax  ){
@@ -951,4 +991,17 @@ function guardarImagenes(imgHtml, tipoImagen, i,  callback){
             }
         });
     });
+}
+
+function consultarImagen(tipoimagendetalle, arrayHhtml){
+
+    var optionsConsulta= { idpersona:IDPERSONA, tipoimagendetalle:tipoimagendetalle};
+
+    _consultarImagen(optionsConsulta, function(data){
+            jQuery.each(data.data, function(i) {
+                var base64String = this;
+                $("#"+arrayHhtml[i]).attr("src",base64String);
+
+            });
+        });
 }

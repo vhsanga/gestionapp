@@ -65,6 +65,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
 import android.webkit.URLUtil;
@@ -110,10 +111,12 @@ public class MainActivity extends AppCompatActivity {
     private Uri fileUri;
     private String filePath;
     private final static int PICKFILE_RESULT_CODE=1;
+    int coficienteCalidad=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         context = this;
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -327,7 +330,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            int scaleFactor = 8;
+            int scaleFactor = coficienteCalidad;
             Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, originalBitmap.getWidth()/scaleFactor,
                     originalBitmap.getHeight()/scaleFactor, true);
             Matrix m = new Matrix();
@@ -531,7 +534,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @JavascriptInterface
-        public void tomarFoto(String idHtmlFoto) {
+        public void tomarFoto(String idHtmlFoto, int coficienteCalidad_) {
+            //coficienteCalidad = 1 es mas alta calidad,  >1 va menorando la calidad
+            coficienteCalidad=coficienteCalidad_;
             strHtmlFoto = idHtmlFoto;
             dispatchTakePictureIntent();
         }
@@ -540,8 +545,8 @@ public class MainActivity extends AppCompatActivity {
         public void selecionarFoto(String idHtmlFoto) {
             strHtmlFoto = idHtmlFoto;
             Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
-            chooseFile.setType("*/*");
-            chooseFile = Intent.createChooser(chooseFile, "Choose a file");
+            chooseFile.setType("image/*");
+            chooseFile = Intent.createChooser(chooseFile, "Selecione un solo archivo");
             startActivityForResult(chooseFile, PICKFILE_RESULT_CODE);
         }
 
