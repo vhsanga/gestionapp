@@ -18,6 +18,7 @@ const _ESTADOSOLICITUDNEGADO='NEG';
 var modalMensaje= null;
 var modalMensajeConfirmacion= null;
 var modalLoad= null;
+var modalImagen= null;
 
 document.addEventListener('DOMContentLoaded', function() {
     _jsonUsuario = JSON.parse(_getClaveValorLocal(_KEY_USUARIO));
@@ -248,9 +249,11 @@ function cargarComponentesHtml(){
         $("#areaAux").append(htmlModalMensaje);
         $("#areaAux").append(htmlModalMensajeConfirmacion);
         $("#areaAux").append(htmlModalLoad);
+        $("#areaAux").append(htmlModalImagen);
         modalMensaje = M.Modal.init(document.querySelector('#modalMensaje'), {dismissible: false,});
         modalMensajeConfirmacion = M.Modal.init(document.querySelector('#modalMensajeConfirmacion'), {dismissible: false,});
         modalLoad = M.Modal.init(document.querySelector('#modalLoad'), {dismissible: false, endingTop: '25%'});
+        modalImagen = M.Modal.init(document.querySelector('#modalImagen'), {dismissible: true, endingTop: '1%'});
 
     }catch(e){
         console.log(e);
@@ -354,6 +357,16 @@ var htmlModalLoad=
     '</div>';
 
 
+var htmlModalImagen=
+    '<div id="modalImagen" class="modal" style="width: 420px;"> '+
+    '    <div class="btnZoom" align="center" > <button id="btnZoomMas" type="button" class="btn teal darken-1 left"><i class="material-icons">add</i></button><span class="left">&nbsp;</span>  <button id="btnZoomMenos" type="button" class="btn teal darken-1 left"><i class="material-icons">remove</i></button> <button id="btnZoomCerrar" type="button" class="btn deep-orange darken-4 right"><i class="material-icons">close</i></button> </div> '+
+    '    <div class="modal-content"> '+
+    '        <div id="wrapImg"> '+
+    '           <img   id="imgPrev" src="" width="400"  /> '+
+    '        </div> '+
+    '      </div> '+
+    '    </div> '+
+    '</div>';
 
 
 

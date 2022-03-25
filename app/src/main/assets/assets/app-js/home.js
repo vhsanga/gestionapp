@@ -17,6 +17,7 @@ var dropServicioGarante = M.Dropdown.init(document.querySelector('#dropServicioG
 var dropImgAux1 = M.Dropdown.init(document.querySelector('#dropImgAux1'), {});
 var dropImgAux2 = M.Dropdown.init(document.querySelector('#dropImgAux2'), {});
 var dropImgAux3 = M.Dropdown.init(document.querySelector('#dropImgAux3'), {});
+var dropFotoDomicilio = M.Dropdown.init(document.querySelector('#dropFotoDomicilio'), {});
 
 var tablaProductos;
 
@@ -42,7 +43,7 @@ function disparadorPaginaInicial() {
     var instancesselect = M.FormSelect.init(select, {});
     _consultarCatalogo(optionsConsulta);
 
-    
+    iniciarZoomImagenes();
 };
 
 
@@ -121,6 +122,14 @@ function initAcciones(){
         }else{
             M.toast({html: "Solo puede tomar hasta tres fotos", displayLength:5000});  
         }                
+    });
+    $("#btnVerFotoDomicilio").on("click", function(event){
+        var idHtml = ["imgDireccion1"];
+        consultarImagen('IMDIR1', idHtml);
+        var idHtml = ["imgDireccion2"];
+        consultarImagen('IMDIR2', idHtml);
+        var idHtml = ["imgDireccion3"];
+        consultarImagen('IMDIR3', idHtml);
     });
 
     $("#btnCedulaAnversoSolicitante").on("click", function(event){
@@ -293,13 +302,96 @@ function initAcciones(){
     $("#btnGuardar9").on("click", function(event){        
         guardarTab9();
     });
+
+    $(".imgFoto").on("click", function(event){
+        var base64String = $(this).attr("src");
+        $("#imgPrev").attr("src",base64String);
+        $("#imgPrev").attr("width","100%");
+        $("#imgPrev").removeAttr("height");
+        $("#fullImagen").show("slow");
+        $(".container").hide();
+        //modalImagen.open();
+    });
     
     initDataTable();
     
 }
+
+function iniciarZoomImagenes(){
+     var image = $('#imgPrev');
+     var wrap = $('#wrapImg');
+     var width = image.width();
+     var height = image.height();
+
+     var offset = wrap.offset();
+
+     var newX = 0;
+     var newY = 0;
+
+     var testScale = 1;
+
+     $("#btnZoomCerrar").on("click", function(event){
+        $("#fullImagen").hide("slow");
+        $(".container").show();
+     });
+
+     /*$("#btnZoomMas").on("click", function(event){
+            testScale = testScale + 0.4
+            console.log("aumentar")
+             var x = event.clientX;
+             var y = event.clientY;
+             var scale = testScale;
+
+             newWidth = image.width() * scale
+             newHeight = image.height() * scale
+
+
+             x -= offset.left + newX
+             y -= offset.top + newY
+
+             newX += -x * (newWidth - width) / newWidth
+             newY += -y * (newHeight - height) / newHeight
+
+             image.css('-webkit-transform', "scale3d(#{scale}, #{scale}, 1)")
+             wrap.css ('-webkit-transform', "translate3d(#{newX}px, #{newY}px, 0)")
+
+             width = newWidth
+             height = newHeight
+
+             image.attr("width", width);
+             image.attr("height", height);
+     });
+
+      $("#btnZoomMenos").on("click", function(event){
+             testScale = testScale - 0.4
+             console.log("menorar "+testScale)
+              var x = event.clientX;
+              var y = event.clientY;
+              var scale = testScale;
+
+              newWidth = image.width() * scale
+              newHeight = image.height() * scale
+              console.log("newWidth"+newWidth)
+
+              x -= offset.left + newX
+              y -= offset.top + newY
+              console.log("x "+x)
+
+              newX += -x * (newWidth - width) / newWidth
+              newY += -y * (newHeight - height) / newHeight
+                console.log("newX "+newX)
+              image.css('-webkit-transform', "scale3d(#{scale}, #{scale}, 1)")
+              wrap.css ('-webkit-transform', "translate3d(#{newX}px, #{newY}px, 0)")
+
+              width = Math.abs(newWidth)
+              height = Math.abs(newHeight)
+                console.log("height "+height)
+              image.attr("width", width);
+              image.attr("height", height);
+      });*/
+}
+
 function mostrarUbicacion(lat, lng){
-    console.log(lat);
-    console.log(lng);
     cambiarPosicion(lat, lng);
     modalUbicacion.open();
 }
