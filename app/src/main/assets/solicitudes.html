@@ -21,14 +21,12 @@
       <h5>Lista de solicitudes Pendientes</h5>
       <div class="card">
         <div class="row">
-          <table id="tablaSolicitudes" style="width: 98%;" class="striped">
+          <table id="tablaSolicitudes" style="width: 98%;" class=striped">
             <thead>
               <tr>
-                  <th style="width: 30px;" >Código</th>
                   <th >Cedula</th> 
                   <th style="width: 200px;">Cliente</th> 
-                  <th >Fecha Solicitud</th>                         
-                  <th style="text-align: right; width: 85px;">Valor total</th> 
+                  <th >Fecha Solicitud</th>
               </tr>
             </thead>
           </table> 
@@ -38,9 +36,9 @@
   </main>
 
 
-  <div id="modalSolicitud" class="modal"> 
+  <div id="modalSolicitud" class="modal" style="height: 100%;">
     <div class="modal-content"> 
-      <h4>Solicitud de Crédito</h4>
+      <h5>Solicitud de Crédito</h5>
       <form id="frmSolicitudCredito" class="col s12">            
         <input name="id" type="hidden" class="_formJSON" />
         <input name="idpersona" type="hidden" class="_formJSON" />
@@ -50,33 +48,27 @@
         <input name="entrada" type="hidden" class="_formJSON" />
         <input name="frecuencia" type="hidden" class="_formJSON" />
         <input name="comentario" type="hidden" class="_formJSON" />
-        
-        <div class="row">          
-          <div class="col s1"></div>
-          <div class="col s6">            
-            <label>Codigo de Solicitud: </label><span id="id"></span>
-          </div>
-          <div class="col s4">
-            <label>Valor del Crédito: </label><span id="valortotal"></span>
-          </div>
-        </div>
-        <div class="row">          
-          <div class="col s1"></div>
-          <div class="col s6">            
-            <b>Cliente: </b><span id="nombres"></span> <br /><br />
-            <b>Cédula: </b><span id="identificacion"></span> <br /><br />   
-            <b>Estado Solicitud: </b><span id="estado"></span><br /><br />
-            <b>Fecha de solicitud: </b><span id="fingreso"></span><br />
-          </div>
-          <div class="col s4">
-            
-            <a   class="btn" id="btnDescargarSolicitudCredito"  download="Solicitud"> <i class="material-icons">picture_as_pdf</i> Download the pdf</a>
-          </div>
-        </div>
 
         <div class="row">          
           <div class="col s1"></div>
-          <div class="col s8">            
+          <div class="col s10">
+            <b>Cliente: </b><span id="nombres"></span> <br />
+            <b>Codigo de Solicitud: </b><span id="id"></span><br />
+            <b>Valor del Crédito: </b><span id="valortotal"></span><br />
+            <b>Cédula: </b><span id="identificacion"></span> <br />
+            <b>Estado Solicitud: </b><span id="estado"></span><br />
+            <b>Fecha de solicitud: </b><span id="fingreso"></span><br />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s12" align="center">
+            <a   class="btn" id="btnDescargarSolicitudCredito"  download="Solicitud"> <i class="material-icons">picture_as_pdf</i> Generar PDF</a>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s12" align="center">
             <div class="input-field">
               <input id="comentario" name="comentario" type="text" class="_formJSON" required="true">
               <label for="comentario">Ingrese aqui el comentario o razón</label>
@@ -88,8 +80,8 @@
 
     </div> 
     <div id="areaBotonesSolicitud" class="modal-footer"> 
-        <button id="btnAprobarSolicitud" class="btn waves-effect waves-green green"> <i class="medium material-icons">close</i> Aceptar Solicitud</button> 
-        <button id="btnNegarSolicitud" class="btn waves-effect waves-green red"> <i class="medium material-icons">check</i> Rechazar Solicitud</button>             
+        <button id="btnAprobarSolicitud" class="btn waves-effect waves-green green"> <i class="medium material-icons">close</i> Aceptar</button>
+        <button id="btnNegarSolicitud" class="btn waves-effect waves-green red"> <i class="medium material-icons">check</i> Rechazar</button>
     </div> 
 </div>
 
@@ -103,6 +95,8 @@
   <!--Import jQuery before materialize.js-->
   <script type="text/javascript" src="./materialize-css/dist/js/jquery.min.js"></script>  
   <script type="text/javascript" src="./materialize-css/dist/js/materialize.min.js"></script>
+  <script type="text/javascript" src="./assets/moment/moment.min.js"></script>
+  <script type="text/javascript" src="./assets/moment/moment-with-locales.min.js"></script>
   <script type="text/javascript" src="./assets/app-js/_util.js"></script>
   <script type="text/javascript" src="./materialize-css/dist/js/jquery.dataTables.js"></script>
   <script type="text/javascript" src="./assets/app-js/solicitudes.js"></script>

@@ -115,6 +115,10 @@ function initAcciones(){
         var idHtml = ["imgPersona"];
         consultarImagen('IMGPER', idHtml);
     });
+    $("#btnDelImgPersona").on("click", function(event){
+            var idHtml = ["imgPersona"];
+            eliminarImagen('IMGPER', idHtml);
+    });
     $("#btnFotoDomicilio").on("click", function(event){
         numFotoDomicilio++;
         if(numFotoDomicilio <= 3){
@@ -131,6 +135,14 @@ function initAcciones(){
         var idHtml = ["imgDireccion3"];
         consultarImagen('IMDIR3', idHtml);
     });
+    $("#btnDelFotoDomicilio").on("click", function(event){
+            var idHtml = ["imgDireccion1"];
+            eliminarImagen('IMDIR1', idHtml);
+            var idHtml = ["imgDireccion2"];
+            eliminarImagen('IMDIR2', idHtml);
+            var idHtml = ["imgDireccion3"];
+            eliminarImagen('IMDIR3', idHtml);
+        });
 
     $("#btnCedulaAnversoSolicitante").on("click", function(event){
         Android.tomarFoto('imgCedulaAnversoSolicitante',8);
@@ -141,6 +153,10 @@ function initAcciones(){
     $("#btnVerCedulaAnversoSolicitante").on("click", function(event){
         var idHtml = ["imgCedulaAnversoSolicitante"];
         consultarImagen('CEDAS', idHtml);
+    });
+    $("#btnDelCedulaAnversoSolicitante").on("click", function(event){
+        var idHtml = ["imgCedulaAnversoSolicitante"];
+        eliminarImagen('CEDAS', idHtml);
      });
 
     $("#btnCedulaReversoSolicitante").on("click", function(event){
@@ -152,7 +168,11 @@ function initAcciones(){
     $("#btnVerCedulaReversoSolicitante").on("click", function(event){
         var idHtml = ["imgCedulaReversoSolicitante"];
         consultarImagen('CEDRS', idHtml);
-     });
+    });
+    $("#btnDelCedulaReversoSolicitante").on("click", function(event){
+        var idHtml = ["imgCedulaReversoSolicitante"];
+        eliminarImagen('CEDRS', idHtml);
+    });
 
     $("#btnServicioSolicitante").on("click", function(event){
         Android.tomarFoto('imgServicioSolicitante',5);
@@ -163,7 +183,11 @@ function initAcciones(){
     $("#btnVerServicioSolicitante").on("click", function(event){
         var idHtml = ["imgServicioSolicitante"];
         consultarImagen('SERSOL', idHtml);
-     });
+    });
+    $("#btnDelServicioSolicitante").on("click", function(event){
+        var idHtml = ["imgServicioSolicitante"];
+        eliminarImagen('SERSOL', idHtml);
+    });
 
     $("#btnCedulaAnversoGarante").on("click", function(event){
         Android.tomarFoto('imgCedulaAnversoGarante',8);
@@ -174,7 +198,11 @@ function initAcciones(){
     $("#btnVerCedulaAnversoGarante").on("click", function(event){
         var idHtml = ["imgCedulaAnversoGarante"];
         consultarImagen('CEDAG', idHtml);
-     });
+    });
+    $("#btnDelCedulaAnversoGarante").on("click", function(event){
+        var idHtml = ["imgCedulaAnversoGarante"];
+        eliminarImagen('CEDAG', idHtml);
+    });
 
     $("#btnCedulaReversoGarante").on("click", function(event){
         Android.tomarFoto('imgCedulaReversoGarante',8);
@@ -185,7 +213,11 @@ function initAcciones(){
     $("#btnVerCedulaReversoGarante").on("click", function(event){
         var idHtml = ["imgCedulaReversoGarante"];
         consultarImagen('CEDRG', idHtml);
-     });
+    });
+    $("#btnDelCedulaReversoGarante").on("click", function(event){
+        var idHtml = ["imgCedulaReversoGarante"];
+        eliminarImagen('CEDRG', idHtml);
+    });
 
     $("#btnServicioGarante").on("click", function(event){
         Android.tomarFoto('imgServicioGarante', 5);
@@ -196,7 +228,11 @@ function initAcciones(){
     $("#btnVerServicioGarante").on("click", function(event){
         var idHtml = ["imgServicioGarante"];
         consultarImagen('SERGAR', idHtml);
-     });
+    });
+    $("#btnDelServicioGarante").on("click", function(event){
+        var idHtml = ["imgServicioGarante"];
+        eliminarImagen('SERGAR', idHtml);
+    });
 
     $("#btnImgAux1").on("click", function(event){
         Android.tomarFoto('imgAux1',5);
@@ -207,7 +243,11 @@ function initAcciones(){
     $("#btnVerImgAux1").on("click", function(event){
         var idHtml = ["imgAux1"];
         consultarImagen('AUX1', idHtml);
-     });
+    });
+    $("#btnDelImgAux1").on("click", function(event){
+        var idHtml = ["imgAux1"];
+        eliminarImagen('AUX1', idHtml);
+    });
 
     $("#btnImgAux2").on("click", function(event){
         Android.tomarFoto('imgAux2',5);
@@ -218,7 +258,11 @@ function initAcciones(){
     $("#btnVerImgAux2").on("click", function(event){
         var idHtml = ["imgAux2"];
         consultarImagen('AUX2', idHtml);
-     });
+    });
+    $("#btnDelImgAux2").on("click", function(event){
+        var idHtml = ["imgAux2"];
+        eliminarImagen('AUX2', idHtml);
+    });
 
     $("#btnImgAux3").on("click", function(event){
         Android.tomarFoto('imgAux3',5);
@@ -229,7 +273,11 @@ function initAcciones(){
     $("#btnVerImgAux3").on("click", function(event){
         var idHtml = ["imgAux3"];
         consultarImagen('AUX3', idHtml);
-     });
+    });
+    $("#btnDelImgAux3").on("click", function(event){
+        var idHtml = ["imgAux3"];
+        eliminarImagen('AUX3', idHtml);
+    });
 
     $("#btnAddReferencia").on("click", function(event){
         if(numReferencias < numReferenciasMax  ){
@@ -1086,9 +1134,7 @@ function guardarImagenes(imgHtml, tipoImagen, i,  callback){
 }
 
 function consultarImagen(tipoimagendetalle, arrayHhtml){
-
     var optionsConsulta= { idpersona:IDPERSONA, tipoimagendetalle:tipoimagendetalle};
-
     _consultarImagen(optionsConsulta, function(data){
             jQuery.each(data.data, function(i) {
                 var base64String = this;
@@ -1096,4 +1142,23 @@ function consultarImagen(tipoimagendetalle, arrayHhtml){
 
             });
         });
+}
+
+
+function eliminarImagen(tipoimagendetalle, arrayHhtml){
+    _mostrarMensajeConfirmacion("¿De verdad desea eliminar esta imagen?",function(){
+        var optionsConsulta= { tabla:"personaimagen", filtro:"idpersona="+IDPERSONA+" and tipoimagendetalle='"+tipoimagendetalle+"'" };
+        _eliminarentidad(optionsConsulta, function(data){
+            if(data.statusCode == 0){
+                jQuery.each(arrayHhtml, function(i) {
+                    var element = this;
+                    $("#"+element).attr("src","./assets/img/imagen.png");
+                    _mostrarMensajeExito("Se ha eliminado la imagen.");
+                });
+            }else{
+                _mostrarMensajeError(data.error);
+            }
+        });
+    });
+
 }

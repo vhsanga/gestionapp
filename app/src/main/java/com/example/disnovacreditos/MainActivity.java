@@ -153,12 +153,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mWebView.setDownloadListener(new DownloadListener() {
-            @Override
-            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-                //tell what to happen here
-            }
-        });
 
         mWebView.setDownloadListener(new DownloadListener() {
             @Override
@@ -166,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
                 request.setTitle(URLUtil.guessFileName(url, contentDisposition, mimetype));
                 request.setDescription("Descargando...");
-                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
                 request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(url, contentDisposition, mimetype));
                 DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
                 dm.enqueue(request);

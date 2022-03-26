@@ -64,15 +64,16 @@
                     <div class="col s4">
                       <center>
                         <!-- Dropdown Trigger -->
-                        <a id="dropPersonaImagen" class='dropdown-trigger btn grey' href='#' data-target='dropdown2'><i class="material-icons">photo_camera</i> </a>
+                        <a id="dropPersonaImagen" class='dropdown-trigger btn green' href='#' data-target='dropdown2'><i class="material-icons">photo_camera</i> </a>
                         <!-- Dropdown Structure -->
                         <ul id="dropdown2" class='dropdown-content' >
                           <li><a href="#!" id="btnFotoPersona" > Tomar Foto</a></li>
                           <li><a href="#!" id="btnSelImgPersona" > Selecionar Foto</a></li>
                           <li><a href="#!" id="btnVerImgPersona" > Ver Foto</a></li>
+                          <li><a href="#!" id="btnDelImgPersona" > Eliminar Foto</a></li>
                         </ul>
                         <br>
-                        <img id="imgPersona" src="" class="imgFoto" />
+                        <img id="imgPersona" src="./assets/img/imagen.PNG" class="imgFoto" />
                       </center>
                     </div>
                   </div>
@@ -114,7 +115,7 @@
                           <label for="genero" >Genero</label>
                         </div>
                         <div class="input-field col s6">                          
-                          <input id="email" name="email" type="text" autocomplete="off" class="validate _formJSON" required="true">
+                          <input id="email" name="email" type="text" autocomplete="off" class="validate _formJSON" >
                           <label for="email">Email</label>
                         </div>
                       </div>
@@ -220,7 +221,7 @@
                     </div>   
                     <div class="input-field col s4">
                       <input id="celular" name="telfono" type="number" class="validate _formJSON" required="true" maxlength="10">
-                      <label for="celular">Cedular</label>
+                      <label for="celular">Celular</label>
                       <input  name="telefonoid" type="hidden" value="0" >
                       <input   name="tipotelefonocatalogo" type="hidden" value="TIPOTLF"  class="_formJSON"/>                       
                       <select id="tipoCelular" name="tipotelefonodetalle"  class="validate _formJSON" ></select>
@@ -238,19 +239,21 @@
                   <div class="row">                                          
                     <div class="col s2">  
                       <br/>
-                          <a id="dropFotoDomicilio" class='dropdown-trigger btn grey' href='#' data-target='dropdown12'><i class="material-icons">photo_camera</i> </a>
+                          <a id="dropFotoDomicilio" class='dropdown-trigger btn green' href='#' data-target='dropdown12'><i class="material-icons">photo_camera</i> </a>
                           <!-- Dropdown Structure -->
                           <ul id="dropdown12" class='dropdown-content' >
                             <li><a href="#!" id="btnFotoDomicilio" > Tomar Foto</a></li>
                             <li><a href="#!" id="btnVerFotoDomicilio" > Ver Foto</a></li>
+                            <li><a href="#!" id="btnDelFotoDomicilio" > Eliminar Fotos </a></li>
+
                           </ul>
                           <br>
                     </div>
                     <div class="col s10">  
                       <br/>                   
-                          <img id="imgDireccion1" src="" class="imgFoto" />
-                          <img id="imgDireccion2" src="" class="imgFoto" />
-                          <img id="imgDireccion3" src="" class="imgFoto" />
+                          <img id="imgDireccion1" src="./assets/img/imagen.PNG" class="imgFoto" />
+                          <img id="imgDireccion2" src="./assets/img/imagen.PNG" class="imgFoto" />
+                          <img id="imgDireccion3" src="./assets/img/imagen.PNG" class="imgFoto" />
                     </div>
                   </div>                   
                        
@@ -666,32 +669,35 @@
             <div class="row">
               <div class="col s4" style="text-align: center;">
                 <label>Cedula Solicitante Frente</label><br />
-                <img id="imgCedulaAnversoSolicitante" src="" class="imgFoto" /> <br />
+                <img id="imgCedulaAnversoSolicitante" src="./assets/img/imagen.PNG" class="imgFoto" /> <br />
                 <a id="dropCedulaAnversoSolicitante" class='dropdown-trigger btn green' href='#' data-target='dropdown3'><i class="material-icons">photo_camera</i> </a>
                 <ul id="dropdown3" class='dropdown-content' >
                   <li><a href="#!" id="btnCedulaAnversoSolicitante" > Tomar Foto</a></li>
                   <li><a href="#!" id="btnSelCedulaAnversoSolicitante" > Selecionar Foto</a></li>
                   <li><a href="#!" id="btnVerCedulaAnversoSolicitante" > Ver Foto</a></li>
+                  <li><a href="#!" id="btnDelCedulaAnversoSolicitante" > Eliminar Fotos </a></li>
                 </ul>
               </div>
               <div class="col s4" style="text-align: center;">
                 <label>Cédula Solicitante Revero</label><br />
-                <img id="imgCedulaReversoSolicitante" src="" class="imgFoto" /><br />
+                <img id="imgCedulaReversoSolicitante" src="./assets/img/imagen.PNG" class="imgFoto" /><br />
                 <a id="dropCedulaReversoSolicitante" class='dropdown-trigger btn green' href='#' data-target='dropdown4'><i class="material-icons">photo_camera</i> </a>
                 <ul id="dropdown4" class='dropdown-content' >
                   <li><a href="#!" id="btnCedulaReversoSolicitante" > Tomar Foto</a></li>
                   <li><a href="#!" id="btnSelCedulaReversoSolicitante" > Selecionar Foto</a></li>
                   <li><a href="#!" id="btnVerCedulaReversoSolicitante" > Ver Foto</a></li>
+                  <li><a href="#!" id="btnDelCedulaReversoSolicitante" > Eliminar Fotos </a></li>
                 </ul>
               </div>
               <div class="col s4" style="text-align: center;">
                 <label>Servicio Básico Solicitante</label><br />
-                <img id="imgServicioSolicitante" src="" class="imgFoto" /><br />
+                <img id="imgServicioSolicitante" src="./assets/img/imagen.PNG" class="imgFoto" /><br />
                 <a id="dropServicioSolicitante" class='dropdown-trigger btn green' href='#' data-target='dropdown5'><i class="material-icons">photo_camera</i> </a>
                 <ul id="dropdown5" class='dropdown-content' >
                   <li><a href="#!" id="btnServicioSolicitante" > Tomar Foto</a></li>
                   <li><a href="#!" id="btnSelServicioSolicitante" > Selecionar Foto</a></li>
                   <li><a href="#!" id="btnVerServicioSolicitante" > Ver Foto</a></li>
+                  <li><a href="#!" id="btnDelServicioSolicitante" > Eliminar Fotos </a></li>
                 </ul>
               </div>                  
             </div>
@@ -699,32 +705,35 @@
             <div class="row">
               <div class="col s4" style="text-align: center;">
                 <label>Cedula Garante Frente</label><br />
-                <img id="imgCedulaAnversoGarante" src="" class="imgFoto" /> <br />
+                <img id="imgCedulaAnversoGarante" src="./assets/img/imagen.PNG" class="imgFoto" /> <br />
                 <a id="dropCedulaAnversoGarante" class='dropdown-trigger btn green' href='#' data-target='dropdown6'><i class="material-icons">photo_camera</i> </a>
                 <ul id="dropdown6" class='dropdown-content' >
                   <li><a href="#!" id="btnCedulaAnversoGarante" > Tomar Foto</a></li>
                   <li><a href="#!" id="btnSelCedulaAnversoGarante" > Selecionar Foto</a></li>
                   <li><a href="#!" id="btnVerCedulaAnversoGarante" > Ver Foto</a></li>
+                  <li><a href="#!" id="btnDelCedulaAnversoGarante" > Eliminar Fotos </a></li>
                 </ul>
               </div>
               <div class="col s4" style="text-align: center;">
                 <label>Cédula Solicitante Revero</label><br />
-                <img id="imgCedulaReversoGarante" src="" class="imgFoto" /><br />
+                <img id="imgCedulaReversoGarante" src="./assets/img/imagen.PNG" class="imgFoto" /><br />
                 <a id="dropCedulaReversoGarante" class='dropdown-trigger btn green' href='#' data-target='dropdown7'><i class="material-icons">photo_camera</i> </a>
                 <ul id="dropdown7" class='dropdown-content' >
                   <li><a href="#!" id="btnCedulaReversoGarante" > Tomar Foto</a></li>
                   <li><a href="#!" id="btnSelCedulaReversoGarante" > Selecionar Foto</a></li>
                   <li><a href="#!" id="btnVerCedulaReversoGarante" > Ver Foto</a></li>
+                  <li><a href="#!" id="btnDelCedulaReversoGarante" > Eliminar Fotos </a></li>
                 </ul>
               </div>
               <div class="col s4" style="text-align: center;">
                 <label>Servicio Básico Garante</label><br />
-                <img id="imgServicioGarante" src="" class="imgFoto" /><br />
+                <img id="imgServicioGarante" src="./assets/img/imagen.PNG" class="imgFoto" /><br />
                 <a id="dropServicioGarante" class='dropdown-trigger btn green' href='#' data-target='dropdown8'><i class="material-icons">photo_camera</i> </a>
                 <ul id="dropdown8" class='dropdown-content' >
                   <li><a href="#!" id="btnServicioGarante" > Tomar Foto</a></li>
                   <li><a href="#!" id="btnSelServicioGarante" > Selecionar Foto</a></li>
                   <li><a href="#!" id="btnVerServicioGarante" > Ver Foto</a></li>
+                  <li><a href="#!" id="btnDelServicioGarante" > Eliminar Fotos </a></li>
                 </ul>
               </div>
             </div>
@@ -732,33 +741,36 @@
 
             <div class="row">
               <div class="col s4" style="text-align: center;">
-                <label>Cedula Garante Frente</label><br />
-                <img id="imgAux1" src="" class="imgFoto" /> <br />
+                <label>Otra Imagen</label><br />
+                <img id="imgAux1" src="./assets/img/imagen.PNG" class="imgFoto" /> <br />
                 <a id="dropImgAux1" class='dropdown-trigger btn green' href='#' data-target='dropdown9'><i class="material-icons">photo_camera</i> </a>
                 <ul id="dropdown9" class='dropdown-content' >
                   <li><a href="#!" id="btnImgAux1" > Tomar Foto</a></li>
                   <li><a href="#!" id="btnSelImgAux1" > Selecionar Foto</a></li>
                   <li><a href="#!" id="btnVerImgAux1" > Ver Foto</a></li>
+                  <li><a href="#!" id="btnDelImgAux1" > Eliminar Fotos </a></li>
                 </ul>
               </div>
               <div class="col s4" style="text-align: center;">
-                <label>Cédula Solicitante Revero</label><br />
-                <img id="imgAux2" src="" class="imgFoto" /><br />
+                <label>Otra Imagen</label><br />
+                <img id="imgAux2" src="./assets/img/imagen.PNG" class="imgFoto" /><br />
                 <a id="dropImgAux2" class='dropdown-trigger btn green' href='#' data-target='dropdown10'><i class="material-icons">photo_camera</i> </a>
                 <ul id="dropdown10" class='dropdown-content' >
                   <li><a href="#!" id="btnImgAux2" > Tomar Foto</a></li>
                   <li><a href="#!" id="btnSelImgAux2" > Selecionar Foto</a></li>
                   <li><a href="#!" id="btnVerImgAux2" > Ver Foto</a></li>
+                  <li><a href="#!" id="btnDelImgAux2" > Eliminar Fotos </a></li>
                 </ul>
               </div>
               <div class="col s4" style="text-align: center;">
-                <label>Servicio Básico Solicitante</label><br />
-                <img id="imgAux3" src="" class="imgFoto" /><br />
+                <label>Otra imagen</label><br />
+                <img id="imgAux3" src="./assets/img/imagen.PNG" class="imgFoto" /><br />
                 <a id="dropImgAux3" class='dropdown-trigger btn green' href='#' data-target='dropdown11'><i class="material-icons">photo_camera</i> </a>
                 <ul id="dropdown11" class='dropdown-content' >
                   <li><a href="#!" id="btnImgAux3" > Tomar Foto</a></li>
                   <li><a href="#!" id="btnSelImgAux3" > Selecionar Foto</a></li>
                   <li><a href="#!" id="btnVerImgAux3" > Ver Foto</a></li>
+                  <li><a href="#!" id="btnDelImgAux3" > Eliminar Fotos </a></li>
                 </ul>
               </div>
             </div>
@@ -917,6 +929,8 @@
   <script type="text/javascript" src="./materialize-css/dist/js/materializeTabs.min.js"></script>
   <script type="text/javascript" src="./materialize-css/dist/js/jquery.dataTables.js"></script>
   <script type="text/javascript" src="./assets/app-js/mapa.js"></script>
+    <script type="text/javascript" src="./assets/moment/moment.min.js"></script>
+    <script type="text/javascript" src="./assets/moment/moment-with-locales.min.js"></script>
   <script type="text/javascript" src="./assets/app-js/_util.js"></script>
   <script type="text/javascript" src="./assets/app-js/home.js"></script>
 

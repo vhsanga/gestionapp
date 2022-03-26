@@ -1,4 +1,4 @@
-//moment.locale('es')  ;
+moment.locale('es')  ;
 const URL="https://gestion.nodoclic.com";
 //const URL="http://172.17.24.47:8080";
 //const URL="http://localhost:8080";
@@ -87,6 +87,16 @@ function _consultarEntidad(jsonConsulta, callback){
 
 function _consultarImagen(jsonConsulta, callback){
     _post("/consultarimagen",jsonConsulta, function(data){
+        if(data.statusCode == 0){
+            callback(data);
+        }else{
+            _mostrarMensajeError(data.error);
+        }
+    });
+}
+
+function _eliminarentidad(json, callback){
+    _post("/eliminarentidad",json, function(data){
         if(data.statusCode == 0){
             callback(data);
         }else{
