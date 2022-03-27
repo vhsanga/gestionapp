@@ -28,9 +28,7 @@ function initAcciones(){
         data: [],
         columns: [ 
             { data: 'user' },
-            { data: 'nombres' },
-            { data: 'rol' },
-            { data: 'estadodetalle' }
+            { data: 'nombres' }
         ],
         rowId: 'id',
         paging: false,
@@ -46,10 +44,6 @@ function initAcciones(){
                 }, 
             },
             { targets: 2,"render": function ( data, type, row ) {
-                return data;
-                }, 
-            },
-            { targets: 4,"render": function ( data, type, row ) {
                 return '<button class="btn green" type="button" onclick="mostrarCambiarRol('+row.id+')" ><i class="medium material-icons">group</i></button>'+
                        '<button class="btn orange" type="button" onclick="mostrarBloquear('+row.id+')" ><i class="medium material-icons">lock</i></button>'+
                        '<button class="btn red" type="button" onclick="mostrarEliminar('+row.id+')" ><i class="medium material-icons">delete_forever</i></button>';

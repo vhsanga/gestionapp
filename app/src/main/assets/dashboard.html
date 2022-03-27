@@ -24,9 +24,9 @@
 
       <div class="row">
         <div style="text-align: center;">
-          <i class="material-icons" style="font-size: 120px;  color: #8bc34a;">blur_on</i>
-          <h3 style="color: #9e9e9e;  font-family: system-ui;  ">Bienvenido</h3>
-          <p style=" font-size: 28px;  color: #9e9e9e;  font-family: system-ui;  ">App de Gestión de Solicitudes de Créditos</p>
+          <i class="material-icons" style="font-size: 80px;  color: #8bc34a;">blur_on</i>
+          <h4 style="color: #9e9e9e;  font-family: system-ui;  ">Bienvenido</h4>
+          <p style=" font-size: 21px;  color: #9e9e9e;  font-family: system-ui;  ">App de Gestión de Solicitudes de Créditos</p>
           <hr />
         </div>
       </div>
@@ -38,19 +38,13 @@
               <h5>Mi usuario</h5>
               <table border="0">
                 <tr>
-                  <td rowspan="3">
+                  <td rowspan="2">
                     <center><i class="material-icons" style="font-size: 75px;  color: #8bc34a;">person</i></center>
                   </td>
-                  <td><b>Usuario:</b> <span id="user"></span> </td>
-                  
-                </tr>
-                <tr>
-                  <td><b>Rol:</b> <span id="rol"></span></td>
-                </tr>
-                <tr>
-                  <td><b>Desde:</b> <span id="fingreso"></span></td>
                 </tr>
               </table>
+              <b>Usuario:</b> <span id="user"></span> <br />
+              <b>Rol:</b> <span id="rol"></span>
 
             </div>
             <div class="row"></div>
@@ -63,21 +57,16 @@
               <h5>Mis créditos</h5>
               <table border="0">
                 <tr>
-                  <td rowspan="4">
+                  <td rowspan="2">
                     <center><i class="material-icons" style="font-size: 75px;  color: #2196f3">assignment</i></center>
                   </td>
-                  <td style="text-align: right; padding-right: 10px;"><b>Aprobadas:</b> <span id="aprobadas"></span> </td>                  
-                </tr>
-                <tr>
-                  <td style="text-align: right; padding-right: 10px;"><b>Negadas:</b> <span id="negadas"></span></td>
-                </tr>
-                <tr>
-                  <td style="text-align: right; padding-right: 10px;"><b>Pendientes:</b> <span id="ingresadas"></span></td>
-                </tr>
-                <tr>
-                  <td style="text-align: right; padding-right: 10px;"><b>Total:</b> <span id="total"></span></td>
+                  <td style="text-align: right; padding-right: 10px;"> </td>
                 </tr>
               </table>
+              <b>Aprobadas:</b> <span id="aprobadas" class="right"></span><br />
+              <b>Negadas:</b> <span id="negadas" class="right"></span><br />
+              <b>Pendientes:</b> <span id="ingresadas" class="right"></span><br />
+              <b>Total:</b> <span id="total" class="right"></span>
 
             </div>
           </form>                        
@@ -87,7 +76,7 @@
 
 
       <div class="row" id="areaAdmin">
-        <div class="col s6">
+        <div class="col m6 s12" >
           <div class="card-panel teal">
             <div class="row no-gutters align-items-center">
               <div class="col s8">
@@ -102,8 +91,8 @@
           </div>
           </div>
         </div>
-        <div class="col s1"></div>
-        <div class="col s5">
+        <div class="col m1"></div>
+        <div class="col m5 s12">
           <div class="card-panel orange darken-4">
             <div class="row no-gutters align-items-center">
               <div class="col s8">
@@ -129,18 +118,16 @@
 
 
 
-
-
     </div>
   </main>
 
-  <footer class="page-footer" style="    background-color: #9e9e9e; opacity: 0.6;">
-    <div class="row" id="frow" style="margin-bottom:0px;">
+
+    <div class="row" id="frow" style="margin-bottom:0px; background-color: #9e9e9e; opacity: 0.6;  width: 100%;">
       <div class="col s12" style="padding-left:0px!important;padding-right:0px!important; text-align: center;">
         <p>Desarrollado por nodoclic Copyright ©. Derechos reservados </p>
       </div>
     </div>
-  </footer>
+
 
 
 
