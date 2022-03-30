@@ -602,7 +602,7 @@ public class MainActivity extends AppCompatActivity {
 
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
-            alertDialog.getWindow().setLayout(640, 480);
+            //alertDialog.getWindow().setLayout(640, 480);
 
             paint = (DrawView) alertDialog.findViewById(R.id.draw_view);
             //pass the height and width of the custom view to the init method of the DrawView object

@@ -61,6 +61,11 @@ function _consultarCatalogo(jsonConsulta){
 }
 
 function _llenarCombobox(idCombobox, array){
+    $(idCombobox).empty();
+    $(idCombobox).append($('<option>', {
+                value: '',
+                text: 'Selecione'
+            }));
     for (var i =0;  i<array.length ;  i++) {
         $(idCombobox).append($('<option>', {
             value: array[i]['codigo'],
@@ -313,8 +318,9 @@ var htmlMenuNav=
     '  </div></li> '+
     '  <li><a href="dashboard.html"><i class="material-icons">dashboard</i>Inicio</a></li> '+
     '  <li><a href="home.html"><i class="material-icons">edit</i>Crear Solicitud de Credito</a></li> '+
-    '  <li><a href="solicitudes.html"><i class="material-icons">list</i>Solicitudes de credito </a></li> '+
+    '  <li><a href="solicitudes.html"><i class="material-icons">list</i>Solicitudes Pendientes </a></li> '+
     '  <li><a href="solicitudesA.html"><i class="material-icons">check</i>Solicitudes Aprobadas </a></li> '+
+    '  <li><a href="solicitudesN.html"><i class="material-icons">close</i>Solicitudes Negadas </a></li> '+
     '  <li id="menu_usuarios" ><a href="usuarios.html"><i class="material-icons">group</i>Usuarios </a></li> '+
     '  <li><div class="divider"></div></li> '+
     '  <li><a class="subheader">Más Opciones</a></li> '+

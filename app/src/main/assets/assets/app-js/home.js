@@ -29,7 +29,6 @@ var optionsConsulta= {
     "#generodetalle": { alias:"GENER", tabla:"catalogodetalle", campos:"codigo, nombre",  filtro:"ccatalogo = 'GENER' and activo=1 ",  orderby:"nombre"  },
     "#ocupacion": { alias:"OCUPACION", tabla:"ocupacion", campos:"codigo, nombre",  filtro:" activo=1 ",  orderby:"nombre"  },
     "#cprovincia": { alias:"PROVINCIAS", tabla:"provincia", campos:"codigo, nombre",  filtro:"1=1",  orderby:"nombre"  },
-    "#cciudad": { alias:"CIUDADES", tabla:"ciudad", campos:"codigo, nombre",  filtro:"1=1",  orderby:"secuencia"  },
 }
 
 function disparadorPaginaInicial() {
@@ -317,7 +316,7 @@ function initAcciones(){
     });
 
     $("#btnAddProducto").on("click", function(e){
-        if(IDSOLICITUDCREDITO == 0){
+        if(IDPERSONA == 0){
             _mostrarMensajeError("Debe completar primero los datos informativos anteriores")
         }else{
             $("#datosAddProducto").trigger("reset");
@@ -360,9 +359,19 @@ function initAcciones(){
         $(".container").hide();
         //modalImagen.open();
     });
-    
+    $('#cprovincia').on('change', function() {
+      cargarCiudades( this.value );
+    });
+
     initDataTable();
     
+}
+
+function cargarCiudades(cprovincia){
+    var optionsConsulta_= {
+        "#cciudad": { alias:"CIUDADES", tabla:"ciudad", campos:"codigo, nombre",  filtro:"1=1 and cprovincia="+cprovincia,  orderby:"secuencia"  },
+    }
+    _consultarCatalogo(optionsConsulta_);
 }
 
 function iniciarZoomImagenes(){
@@ -777,14 +786,15 @@ function guardarTab3(){
 
 
 
-function crearSolicitud(){    
+function crearSolicitud(callback=function(){} ){
     var dataSend = {   estado :  1, idpersona:IDPERSONA, estado:_ESTADOSOLICITUDINGRESADO, idusuario:_jsonUsuario.idusuario };
     var insert = {  alias:"solicitudcredito", tabla:"solicitudcredito",  obj:dataSend }
     var arrayInsert=[insert];
     _post("/insertar",arrayInsert, function(data){
         if(data.statusCode == 0){            
             var solicitudcredito = data.data[0].solicitudcredito;   
-            IDSOLICITUDCREDITO = solicitudcredito.id;                               
+            IDSOLICITUDCREDITO = solicitudcredito.id;
+            callback();
         }else{
             _mostrarMensajeError(data.error);  
         }   
@@ -946,7 +956,7 @@ function guardarTab7(){
 }
 
 
-function guardarTab8(){    
+function guardarTab8(){
     if(IDSOLICITUDCREDITO == 0){
         _mostrarMensajeError("Debe completar primero los datos informativos anteriores")
         return;
@@ -968,13 +978,13 @@ function guardarTab8(){
     var insert = {  alias:"solicitudcredito", tabla:"solicitudcredito",  obj:dataSend }
     var arrayInsert=[insert];
     _post("/insertar",arrayInsert, function(data){
-        if(data.statusCode == 0){            
+        if(data.statusCode == 0){
             _mostrarMensajeExito("Se han guardado los productos.", function(){
                 $("#linkTest4").click();
             });
         }else{
-            _mostrarMensajeError(data.error);  
-        }   
+            _mostrarMensajeError(data.error);
+        }
     });
 }
 
@@ -1033,26 +1043,56 @@ function consultarListas(){
 
 
 function guardarProducto(){
+    var crearSol= false;
     var dataSend=_getDataForm("datosAddProducto");
     if(dataSend == null){
         return;
     }
-    dataSend.activo=1;
-    dataSend.idsolicitudcredito=IDSOLICITUDCREDITO;
-    var arrayInsert=[];
-    arrayInsert.push({  alias:"creditoproducto", tabla:"creditoproducto",  obj:dataSend });
-    _post("/insertar",arrayInsert, function(data){
-        modalProducto.close();  
-        if(data.statusCode == 0){    
-            var p=data.data[0].creditoproducto; 
-            tablaProductos.rows.add( [p] ).draw();
-            $("#valortotal").val( parseFloat($("#valortotal").val()) + parseFloat(p.ptotal) );
-            $("#entrada").focus();
-           
-        }else{
-            _mostrarMensajeError(data.error);  
-        }  
-    });
+    if(IDSOLICITUDCREDITO == 0){
+        crearSol=true;
+    }
+
+    if(crearSol){
+            //en caso de qu no tenga una solicitud se manda a crear la solicitud y despues se manda a guardar los productos
+            dataSend.activo=1;
+            dataSend.idsolicitudcredito=IDSOLICITUDCREDITO;
+            var arrayInsert=[];
+            arrayInsert.push({  alias:"creditoproducto", tabla:"creditoproducto",  obj:dataSend });
+             crearSolicitud(function(){
+                dataSend.idsolicitudcredito=IDSOLICITUDCREDITO;
+                _post("/insertar",arrayInsert, function(data){
+                    modalProducto.close();
+                    if(data.statusCode == 0){
+                        var p=data.data[0].creditoproducto;
+                        tablaProductos.rows.add( [p] ).draw();
+                        $("#valortotal").val( parseFloat($("#valortotal").val()) + parseFloat(p.ptotal) );
+                        $("#entrada").focus();
+
+                    }else{
+                        _mostrarMensajeError(data.error);
+                    }
+                });
+             });
+    }else{
+    //en caso de que ya tenga solicitud de credito solamnete se manda a guardar producto
+        dataSend.activo=1;
+        dataSend.idsolicitudcredito=IDSOLICITUDCREDITO;
+        var arrayInsert=[];
+        arrayInsert.push({  alias:"creditoproducto", tabla:"creditoproducto",  obj:dataSend });
+        _post("/insertar",arrayInsert, function(data){
+            modalProducto.close();
+            if(data.statusCode == 0){
+                var p=data.data[0].creditoproducto;
+                tablaProductos.rows.add( [p] ).draw();
+                $("#valortotal").val( parseFloat($("#valortotal").val()) + parseFloat(p.ptotal) );
+                $("#entrada").focus();
+
+            }else{
+                _mostrarMensajeError(data.error);
+            }
+        });
+    }
+
 }
 
 function guardarTab9(){

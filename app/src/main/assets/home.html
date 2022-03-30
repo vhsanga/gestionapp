@@ -155,23 +155,23 @@
             <form id="datosDireccion">
               <input id="id" name="id" type="hidden" value="0" class="_formJSON" />
                   <div class="row">
-                    <div class="input-field col s3">
+                    <div class="input-field col s6 m6 l3">
                       <input  id="tipodireccioncatalogo" name="tipodireccioncatalogo" type="hidden" value="TIPODOM"  class="_formJSON" />
                       <select id="tipodirecciondetalle"  name="tipodirecciondetalle" class="validate _formJSON" required="true">
                       </select>
                       <label >Tipo Direccion</label>
                     </div>
 
-                    <div class="input-field col s3">
+                    <div class="input-field col s6 m6 l3">
                       <input id="tiempo" name="tiempo" type="number" class="validate _formJSON" required="true" maxlength="2" >
                       <label for="tiempo">Tiempo (años)</label>
                     </div>  
-                    <div class="input-field col s3">
+                    <div class="input-field col s6 m6 l3">
                       <select id="cprovincia"  name="cprovincia"  class="validate _formJSON" required="true">
                       </select>
                       <label >Provincia</label>
                     </div>  
-                    <div class="input-field col s3">
+                    <div class="input-field col s6 m6 l3">
                       <select id="cciudad" name="cciudad" class="validate _formJSON" required="true" >
                       </select>
                       <label >Ciudad</label>
@@ -181,18 +181,18 @@
 
 
                   <div class="row">
-                    <div class="input-field col s1">
+                    <div class="input-field col s1 m1 l1">
                       <button id="btnUbicacion" class="btn teal" type="button">
                         <i class="large material-icons">location_searching</i>
                       </button>
                     </div>
-                    <div class="input-field col s7">
+                    <div class="input-field col s11 m11 l7">
                       <input id="lat" name="lat" type="hidden" class="_formJSON" />
                       <input id="lng" name="lng" type="hidden" class="_formJSON"/>
                       <input id="direccion" name="direccion" type="text" class="validate _formJSON" required="true" maxlength="250">
-                      <label for="direccion">Direccion Completa, calle principal, numero y transversal</label>                      
+                      <label for="direccion">Direccion Completa</label>
                     </div>   
-                    <div class="input-field col s4">
+                    <div class="input-field col s12 m12 l4">
                       <input id="sector" name="sector" type="text" class="validate _formJSON" required="true">
                       <label for="sector">Sector</label>
                     </div>                  
@@ -352,11 +352,11 @@
                 <table id="tablaProductos" style="width: 98%;">
                   <thead>
                     <tr>
-                        <th >Producto</th>
-                        <th >Marca/ color / serie</th> 
-                        <th style="text-align: right;">P unit</th> 
-                        <th style="text-align: right;">Cant</th>                         
-                        <th style="text-align: right;">P total</th>
+                        <th >Prod</th>
+                        <th >Det</th>
+                        <th style="text-align: right;">Precio</th>
+                        <th style="text-align: right;">Cant</th>
+                        <th style="text-align: right;">Total</th>
                         <th style="text-align: center; width: 25px;"></th>
                     </tr>
                   </thead>
@@ -493,24 +493,24 @@
           <form id="datosActividad" class="col s12">
             <input id="id" name="id" type="hidden" value="0" class="_formJSON" />
             <div class="row">
-              <div class="input-field col s4">
+              <div class="input-field col  s6 m6 l4">
                 <select id="ocupacion" name="ocupacion" class="validate _formJSON" required="true">
                 </select>
                 <label >Ocupacion</label>
               </div>
 
-              <div class="input-field col s8">
+              <div class="input-field col s6 m6 l8">
                 <input id="trabajoactual" name="trabajoactual" type="text" class="validate _formJSON" required="true">
                 <label for="trabajoactual">TRABAJO ACTUAL (Actividad que realiza/cargo)</label>
               </div>                     
             </div>
 
             <div class="row">
-              <div class="input-field col s8">
+              <div class="input-field col m6 s6 l8">
                 <input id="direccionempresa" name="direccionempresa" type="text" class="validate _formJSON" required="true">
                 <label for="direccionempresa">Direccion donde trabaja </label>
               </div> 
-              <div class="input-field col s4">
+              <div class="input-field col m6 s6 l4">
                 <input id="telefonoA" name="telefono" type="number" class="validate _formJSON" required="true" maxlength="10">
                 <label for="telefonoA">Telefonos</label>
               </div> 
@@ -518,7 +518,7 @@
             </div>
 
             <div class="row">
-              <div class="input-field col s4">
+              <div class="input-field col s6 m6 l4">
                 <input id="sueldo" name="ingresos" type="number" class="validate _formJSON" required="true" maxlength="6">
                 <label for="sueldo">sueldo</label>
               </div>                  
@@ -831,7 +831,7 @@
             <div class="row"></div>        
             <div class="row"></div>        
             <center>
-              <button id="btnGuardar7"  class="btn btn-large" type="button"> <i class="material-icons">check</i> FINALIZAR SOLICIUD DE CREDITO </button>
+              <button id="btnGuardar7"  class="btn btn-large" type="button"> <i class="material-icons">check</i> FINALIZAR SOLICITUD DE CREDITO </button>
             </center> 
             <div class="row"></div>        
             <div class="row"></div>        
