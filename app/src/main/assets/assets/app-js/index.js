@@ -4,8 +4,12 @@ $(function() {
     modalRecuperarClave = M.Modal.init(document.querySelector('#modalRecuperarClave'), {dismissible: false,});
     initEventos();
     verificarSession();
-    _mostrarPaginaInicial();
+
 });
+
+function disparadorPaginaInicial() {
+    _mostrarPaginaInicial();
+}
 
 
 function initEventos(){

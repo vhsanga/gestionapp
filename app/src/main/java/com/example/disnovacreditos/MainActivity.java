@@ -65,6 +65,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
@@ -122,6 +123,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setContentView(R.layout.activity_main);
+
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = this.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(this.getResources().getColor(R.color.disnovaoficial));
+        }
+
         String[] permissionRequests = {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
         };

@@ -40,9 +40,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function _validarPermisos(){
     //1 es administrador
-     if(_jsonUsuario.idrol!="1"){
-        $("#menu_usuarios").hide();
-     }
+    try{
+        if(_jsonUsuario.idrol!="1"){
+                $("#menu_usuarios").hide();
+             }
+    }catch(e){
+        console.log(e)
+    }
+
 }
 
 

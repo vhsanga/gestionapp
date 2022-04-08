@@ -41,7 +41,7 @@
                 <label for='pass'>Contraseña</label>
               </div>
               <label style='float: right;'>
-								<a class='pink-text' href='#!'><b>Olvido su Contraseña</b></a>
+								<a  id="btnOlvidoContrasenia" class='pink-text' href='#!'><b>Olvido su Contraseña</b></a>
 							</label>
             </div>
 
@@ -67,7 +67,29 @@
     <!-- Modal Structure -->
   <div id="areaAux" ></div>
 
+    <div id="modalRecuperarClave" class="modal">
+      <div class="modal-content">
+        <h4>Recuperar la Contraseña</h4>
+        <form id="recuperarClave" class="col s12">
 
+
+          <div class="row">
+            <div class="input-field col s2 m2 l4"></div>
+            <div class="input-field col s8 m8 l4">
+              <input id="rusuario" name="rusuario" type="text" class="validate _formJSON" required="true" >
+              <label for="rusuario">Nombre de Usuario</label>
+            </div>
+          </div>
+
+
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat"> <i class="medium material-icons">close</i> Cancelar</a>
+        <a href="#!" id="btnResetarClave" class="waves-effect waves-green btn-flat"> <i class="medium material-icons">check</i> Recuperar</a>
+      </div>
+    </div>
     
 
   <script type="text/javascript" src="./materialize-css/dist/js/jquery.min.js"></script>    
