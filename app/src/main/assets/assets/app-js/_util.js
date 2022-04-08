@@ -21,13 +21,22 @@ var modalLoad= null;
 var modalImagen= null;
 
 document.addEventListener('DOMContentLoaded', function() {
+    _quitarPaginaInicial();
     _jsonUsuario = JSON.parse(_getClaveValorLocal(_KEY_USUARIO));
     cargarComponentesHtml();
     cargarMenuNav();
     _validarPermisos();
-    disparadorPaginaInicial();  // esta funcion esta en caga pagina. es le primero en ejecutarse.
+    disparadorPaginaInicial(); // esta funcion esta en caga pagina. es le primero en ejecutarse.
   });
 
+  function _quitarPaginaInicial(){
+        try{document.getElementsByClassName("container")[0].style.display='none'; } catch(e){console.log(e)}
+  }
+
+    function _mostrarPaginaInicial(){
+        document.getElementsByClassName("container")[0].style.display='block';
+        //$(".container").show('slow');
+  }
 
   function _validarPermisos(){
     //1 es administrador
@@ -37,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 
-function _consultarCatalogo(jsonConsulta){
+function _consultarCatalogo(jsonConsulta, callback){
     var arrayConsulta=[];
     jQuery.each(jsonConsulta, function(idhtml, consultar ) {
         arrayConsulta.push(consultar);
@@ -57,6 +66,7 @@ function _consultarCatalogo(jsonConsulta){
         }else{
             _mostrarMensajeError(data.error);
         }
+        callback();
     });
 }
 

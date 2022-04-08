@@ -197,7 +197,6 @@ function consultarListas(){
           filtro: "u.estadodetalle in ('ACT', 'BLOC', 'TEMP') and u.idcompania="+_idcompania +" and ur.activo=1",  orderby:"u.fingreso desc"  },        
     ]
     _consultarEntidad(optionsConsulta, function(data){
-        console.log(data);
         for( var i =0 ; i < data.data.length ; i++){
             var entidad =data.data[i]; 
             jQuery.each(entidad, function(key, arrayJsonDatos ) {    
@@ -209,6 +208,7 @@ function consultarListas(){
                }               
             }); 
         }
+        _mostrarPaginaInicial();
     });
 }
 

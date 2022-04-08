@@ -109,6 +109,7 @@ function consultarListas(){
                }
             }); 
         }
+        _mostrarPaginaInicial();
     });
 }
 

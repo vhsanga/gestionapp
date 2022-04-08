@@ -5,6 +5,7 @@ function disparadorPaginaInicial() {
 
     initAcciones();
     consultarData()
+    _mostrarPaginaInicial();
 };
 
 

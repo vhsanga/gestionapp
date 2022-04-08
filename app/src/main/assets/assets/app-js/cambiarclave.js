@@ -12,6 +12,7 @@ function validarPermisos(){
      if(_jsonUsuario.idrol!="1"){
          
      }
+     _mostrarPaginaInicial();
 }
 
 function initAcciones(){

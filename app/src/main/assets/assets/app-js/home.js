@@ -5,7 +5,7 @@ var IDSOLICITUDCREDITO=0;
 var numFotoDomicilio=0;
 
 var modalProducto = M.Modal.init(document.querySelector('#modalProducto'), {dismissible: false,});
-var modalUbicacion = M.Modal.init(document.querySelector('#modalUbicacion'), {dismissible: false,});
+var modalUbicacion = M.Modal.init(document.querySelector('#modalUbicacion'), {dismissible: true,});
 var dropPersona = M.Dropdown.init(document.querySelector('#dropPersonaMenu'), {});
 var dropPersonaImagen = M.Dropdown.init(document.querySelector('#dropPersonaImagen'), {});
 var dropCedulaAnversoSolicitante = M.Dropdown.init(document.querySelector('#dropCedulaAnversoSolicitante'), {});
@@ -40,7 +40,9 @@ function disparadorPaginaInicial() {
 
     var select = document.querySelectorAll('select');
     var instancesselect = M.FormSelect.init(select, {});
-    _consultarCatalogo(optionsConsulta);
+    _consultarCatalogo(optionsConsulta, function(){
+        _mostrarPaginaInicial();
+    });
 
     iniciarZoomImagenes();
 };
@@ -343,7 +345,19 @@ function initAcciones(){
     });
 
     $("#btnUbicacion").on("click", function(e){
-        Android.obtenerUbicacion();
+        var lat =$("#lat").val();
+        var lng =$("#lng").val();
+        if (lat === ''){
+            try{
+                Android.obtenerUbicacion();
+            }catch(e){
+                modalUbicacion.open();
+            }
+
+        }else{
+            mostrarUbicacion(parseFloat(lat), parseFloat(lng));
+        }
+
     });
     
     $("#btnGuardar9").on("click", function(event){        

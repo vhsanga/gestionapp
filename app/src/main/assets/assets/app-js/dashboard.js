@@ -2,7 +2,7 @@
 function disparadorPaginaInicial() {
 
     initAcciones();
-    consultarData()
+    consultarData();
 };
 
 
@@ -44,6 +44,7 @@ function consultarData(){
                 });
             });            
         });
+        _mostrarPaginaInicial();
     });
 }
 

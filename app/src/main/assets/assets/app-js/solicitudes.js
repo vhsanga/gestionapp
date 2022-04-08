@@ -115,6 +115,7 @@ function consultarListas(){
                }
             }); 
         }
+        _mostrarPaginaInicial();
     });
 }
 

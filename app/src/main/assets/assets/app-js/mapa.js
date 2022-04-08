@@ -16,6 +16,8 @@ function initMap() {
       map: map,
     });
 
+    marker.setAnimation(google.maps.Animation.DROP);
+
     geocoder = new google.maps.Geocoder();
     
 
