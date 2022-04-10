@@ -18,11 +18,17 @@ const _ESTADOSOLICITUDNEGADO='NEG';
 var modalMensaje= null;
 var modalMensajeConfirmacion= null;
 var modalLoad= null;
+var modalLoadPercent= null;
 var modalImagen= null;
 
 document.addEventListener('DOMContentLoaded', function() {
     _quitarPaginaInicial();
     _jsonUsuario = JSON.parse(_getClaveValorLocal(_KEY_USUARIO));
+    if(_jsonUsuario == null){
+        if(window.location.href.indexOf('index.html')==-1 ){
+            window.location.href = 'index.html';
+        }
+    }
     cargarComponentesHtml();
     cargarMenuNav();
     _validarPermisos();
@@ -51,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 
-function _consultarCatalogo(jsonConsulta, callback){
+function _consultarCatalogo(jsonConsulta, callback=function(){} ){
     var arrayConsulta=[];
     jQuery.each(jsonConsulta, function(idhtml, consultar ) {
         arrayConsulta.push(consultar);
@@ -153,8 +159,17 @@ function _post(path, jsonSend, callback){
       });
 }
 
+var valorIntervaloModal = 0;
+function _addPorcentaje(valor){
+    try{
+        $("#porcentajeLoad").css( "width" ,valor+"%")
+    }catch(e){
+        console.log(e);
+    }
+}
 
-function _postArchivo(path, dataSend, callback){
+
+function _postArchivo(path, dataSend, callback, intervalo=null){
     $.ajax({
         url:URL+path,
         type:"POST",
@@ -163,7 +178,11 @@ function _postArchivo(path, dataSend, callback){
         contentType: false,
         processData: false,
         beforeSend:function(jqXHR, settings){
-            modalLoad.open();
+            if(intervalo==null){
+               modalLoad.open();
+            }else{
+               modalLoadPercent.open();
+           }
         },
         success: function(data){
             callback(data);
@@ -174,10 +193,19 @@ function _postArchivo(path, dataSend, callback){
             }catch(e){
                 _mostrarMensajeError("ERROR DE CONEXION CON EL SERVIDOR");
             }
-          console.log(err);
         },
         complete: function(){
-            modalLoad.close();
+            if(intervalo==null){
+               modalLoad.close();
+            }else{
+                valorIntervaloModal += intervalo;
+                _addPorcentaje(valorIntervaloModal);
+                if(valorIntervaloModal >= 97){
+                    modalLoadPercent.close();
+                    valorIntervaloModal=0;
+                    _addPorcentaje(valorIntervaloModal);
+                }
+            }
         }
       });
 }
@@ -218,7 +246,7 @@ function _mostrarMensajeExito(mensaje){
     $("#btnAceptarMensajexx").unbind();
 }
 
-function _mostrarMensajeExito(mensaje, callback){
+function _mostrarMensajeExito(mensaje, callback=function(){}){
     $("#txtMensaje").html(mensaje);
     $("#iconoMensaje").html(_iconoSucces);
     $("#iconoMensaje").css("color",_colorTextoSucces);
@@ -279,10 +307,12 @@ function cargarComponentesHtml(){
         $("#areaAux").append(htmlModalMensaje);
         $("#areaAux").append(htmlModalMensajeConfirmacion);
         $("#areaAux").append(htmlModalLoad);
+        $("#areaAux").append(htmlModalLoadPercent);
         $("#areaAux").append(htmlModalImagen);
         modalMensaje = M.Modal.init(document.querySelector('#modalMensaje'), {dismissible: false,});
         modalMensajeConfirmacion = M.Modal.init(document.querySelector('#modalMensajeConfirmacion'), {dismissible: false,});
         modalLoad = M.Modal.init(document.querySelector('#modalLoad'), {dismissible: false, endingTop: '25%'});
+        modalLoadPercent = M.Modal.init(document.querySelector('#modalLoadPercent'), {dismissible: false, endingTop: '25%'});
         modalImagen = M.Modal.init(document.querySelector('#modalImagen'), {dismissible: true, endingTop: '1%'});
 
     }catch(e){
@@ -316,22 +346,21 @@ function cargarMenuNav(){
 var htmlMenuNav=
     '<nav> '+
     ' <div class="nav-wrapper  navBar"> '+
-    '   <a href="#" class="brand-logo"> '+
-    '        <img class="responsive-img logo left" src="./assets/logo.png" /></a> '+
+    '   <a href="#" class="brand-logo" style="margin-left: 20px;"> '+
+    '        <img class="responsive-img logo left" src="./assets/logo.png" style="height: 50px;" /></a> '+
     '    <a href="#" data-target="slide-out" class="sidenav-trigger right"><i '+
     '      class="material-icons">menu</i></a>      '+
     '  </div> '+
     '</nav> '+
     '<ul id="slide-out" class="sidenav"> '+
     '  <li><div class="user-view"> '+
-    '    <div class="background"> '+
-    '      <img src="./assets/img/office.jpg"> '+
+    '    <div class="background" style="background:#021f61"> '+
     '    </div> '+
-    '    <a href="#user"><img class="circle" src="./assets/img/yuna.jpg"></a> '+
-    '    <a href="#name"><span id="spnNombreUsuario" class="white-text name"></span></a> '+
+    '    <a href="#user"><i class="large material-icons" style="color:#ef9705; margin-top: -17px ;">portrait</i></a> '+
+    '    <a href="#name"><span id="spnNombreUsuario" class="white-text name" style="margin-top: -8px; font-size: 18px; font-weight: bold;" ></span></a> '+
     '    <a href="#email"><span id="spnRolUsuario" class="white-text email"></span></a> '+
     '  </div></li> '+
-    '  <li><a href="dashboard.html"><i class="material-icons">dashboard</i>Inicio</a></li> '+
+    '  <li><a href="dashboard.html"><i class="material-icons">home</i>Inicio</a></li> '+
     '  <li><a href="home.html"><i class="material-icons">edit</i>Crear Solicitud de Credito</a></li> '+
     '  <li><a href="solicitudes.html"><i class="material-icons">list</i>Solicitudes Pendientes </a></li> '+
     '  <li><a href="solicitudesA.html"><i class="material-icons">check</i>Solicitudes Aprobadas </a></li> '+
@@ -384,6 +413,16 @@ var htmlModalLoad=
     '          </div> '+
     '        </div> '+
     '      </div> </br> </br> '+
+    '    </div> '+
+    '</div>';
+
+var htmlModalLoadPercent=
+    '<div id="modalLoadPercent" class="modal" style="width: 325px;"> '+
+    '    <div class="modal-content"> '+
+    '        <p> Por favor espere. </p> '+
+    '        <div class="progress"> '+
+    '            <div id="porcentajeLoad" class="determinate" style="width: 0%"></div> '+
+    '        </div></br> </br> '+
     '    </div> '+
     '</div>';
 

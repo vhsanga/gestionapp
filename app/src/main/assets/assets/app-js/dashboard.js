@@ -7,9 +7,13 @@ function disparadorPaginaInicial() {
 
 
 function initAcciones(){
-    if(_jsonUsuario.idrol!="1"){
-        $("#areaAdmin").hide();
-     }
+    try{
+        if(_jsonUsuario.idrol!="1"){
+                $("#areaAdmin").hide();
+             }
+    }catch(e){
+    }
+
 }
 
 

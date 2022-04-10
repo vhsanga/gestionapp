@@ -60,6 +60,8 @@ import androidx.webkit.WebViewAssetLoader;
 import androidx.webkit.WebViewClientCompat;
 
 import com.example.disnovacreditos.databinding.ActivityMainBinding;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -113,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
     private String filePath;
     private final static int PICKFILE_RESULT_CODE=1;
     int coficienteCalidad=1;
+    Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -319,56 +322,79 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            Bitmap originalBitmap = BitmapFactory.decodeFile(currentPhotoPath);
-            File file = new File(currentPhotoPath);
-            file.delete();
-            if(file.exists()){
+
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) { //respuesta al tomar la foto
+            CropImage.activity(imageUri) //abrir la actividad para recortar la imagen
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setCropMenuCropButtonTitle("Aceptar")
+                    .start(this);
+        }
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) { //respuesta al recortar la imagen
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri resultUri = result.getUri();
+                Bitmap originalBitmap = BitmapFactory.decodeFile(resultUri.getPath());
                 try {
-                    file.getCanonicalFile().delete();
-                } catch (IOException e) {
+                    File file = new File(currentPhotoPath);
+                    file.delete();
+                    if(file.exists()){
+                        try {
+                            file.getCanonicalFile().delete();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        if(file.exists()){
+                            getApplicationContext().deleteFile(file.getName());
+                        }
+                    }
+                }catch (Exception e){
                     e.printStackTrace();
                 }
-                if(file.exists()){
-                    getApplicationContext().deleteFile(file.getName());
+                int scaleFactor = coficienteCalidad;
+                Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, originalBitmap.getWidth()/scaleFactor,
+                        originalBitmap.getHeight()/scaleFactor, true);
+                Matrix m = new Matrix();
+                //m.postRotate(90);
+                Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), m, true);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
+                    Log.d("size:", String.valueOf(rotatedBitmap.getByteCount()));
+                } else {// www. j  a  va  2s.c o m
+                    Log.d("size:", String.valueOf(rotatedBitmap.getRowBytes() * rotatedBitmap.getHeight()));
                 }
-            }
+                Log.d("width", String.valueOf(rotatedBitmap.getWidth()));
+                Log.d("Height", String.valueOf(rotatedBitmap.getHeight()));
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                rotatedBitmap.compress(Bitmap.CompressFormat.PNG, 20, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
+                Log.d("size d:", String.valueOf(byteArray.length));
+                String imgageBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                try {
+                    final String retFunction = "javascript:mostrarFoto('"+URLEncoder.encode(imgageBase64, "UTF-8")+"' , '"+strHtmlFoto+"' )";
 
-            int scaleFactor = coficienteCalidad;
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, originalBitmap.getWidth()/scaleFactor,
-                    originalBitmap.getHeight()/scaleFactor, true);
-            Matrix m = new Matrix();
-            m.postRotate(90);
-            Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), m, true);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
-                Log.d("size:", String.valueOf(rotatedBitmap.getByteCount()));
-            } else {// www. j  a  va  2s.c o m
-                Log.d("size:", String.valueOf(rotatedBitmap.getRowBytes() * rotatedBitmap.getHeight()));
-            }
-            Log.d("width", String.valueOf(rotatedBitmap.getWidth()));
-            Log.d("Height", String.valueOf(rotatedBitmap.getHeight()));
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            rotatedBitmap.compress(Bitmap.CompressFormat.PNG, 20, byteArrayOutputStream);
-            byte[] byteArray = byteArrayOutputStream.toByteArray();
-            Log.d("size d:", String.valueOf(byteArray.length));
-            String imgageBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-            try {
-                final String retFunction = "javascript:mostrarFoto('"+URLEncoder.encode(imgageBase64, "UTF-8")+"' , '"+strHtmlFoto+"' )";
-
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        mWebView.evaluateJavascript(retFunction, null);
-                    }
-                });
-            } catch(Exception ex) {
-                ex.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            mWebView.evaluateJavascript(retFunction, null);
+                        }
+                    });
+                } catch(Exception ex) {
+                    ex.printStackTrace();
+                }
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
             }
         }
 
         switch (requestCode) {
             case PICKFILE_RESULT_CODE:
-                if (resultCode == -1) {
+                if (resultCode == -1) { //respuesta al selecionar la imagen
+                    coficienteCalidad = 1;
                     Uri selectedImage = data.getData();
+                    CropImage.activity(selectedImage) //abrir la actividad para recortar la imagen
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .setCropMenuCropButtonTitle("Aceptar")
+                            .start(this);
+                    /*Uri selectedImage = data.getData();
                     try {
                         // Do whatever you want with this bitmap (image)
                         Bitmap bitmapImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
@@ -393,51 +419,7 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
-                    }
-                    /*
-                    Uri uri = data.getData();
-                    String fileName = getFileName(uri);
-
-                    // The temp file could be whatever you want
-                    try {
-                        File fileCopy = copyToTempFile(uri, new File(fileName));
-                        currentPhotoPath = fileCopy.getAbsolutePath();
-                        Bitmap originalBitmap = BitmapFactory.decodeFile(currentPhotoPath);
-
-                        int scaleFactor = 4;
-                        Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, originalBitmap.getWidth()/scaleFactor,
-                                originalBitmap.getHeight()/scaleFactor, true);
-                        Matrix m = new Matrix();
-                        m.postRotate(90);
-                        Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), m, true);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
-                            Log.d("size:", String.valueOf(rotatedBitmap.getByteCount()));
-                        } else {// www. j  a  va  2s.c o m
-                            Log.d("size:", String.valueOf(rotatedBitmap.getRowBytes() * rotatedBitmap.getHeight()));
-                        }
-                        Log.d("width", String.valueOf(rotatedBitmap.getWidth()));
-                        Log.d("Height", String.valueOf(rotatedBitmap.getHeight()));
-                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                        rotatedBitmap.compress(Bitmap.CompressFormat.PNG, 20, byteArrayOutputStream);
-                        byte[] byteArray = byteArrayOutputStream.toByteArray();
-                        Log.d("size d:", String.valueOf(byteArray.length));
-                        String imgageBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                        try {
-                            final String retFunction = "javascript:mostrarFoto('"+URLEncoder.encode(imgageBase64, "UTF-8")+"' , '"+strHtmlFoto+"' )";
-
-                            runOnUiThread(new Runnable() {
-                                public void run() {
-                                    mWebView.evaluateJavascript(retFunction, null);
-                                }
-                            });
-                        } catch(Exception ex) {
-                            ex.printStackTrace();
-                        }
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
                     }*/
-
 
                 }
 
@@ -483,6 +465,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("oath", photoFile.getAbsolutePath());
                 Uri photoURI = FileProvider.getUriForFile(getApplicationContext(),
                         "com.example.disnovacreditos.fileprovider", photoFile);
+                imageUri = photoURI;
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(intent, REQUEST_TAKE_PHOTO);
             }
@@ -543,6 +526,16 @@ public class MainActivity extends AppCompatActivity {
             coficienteCalidad=coficienteCalidad_;
             strHtmlFoto = idHtmlFoto;
             dispatchTakePictureIntent();
+        }
+
+        @JavascriptInterface
+        public void recargarPagina(String pagina) {
+            mWebView.post(new Runnable() {
+                @Override
+                public void run() {
+                    mWebView.loadUrl("file:///android_asset/"+pagina);
+                }
+            });
         }
 
         @JavascriptInterface

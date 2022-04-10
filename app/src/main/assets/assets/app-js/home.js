@@ -29,6 +29,7 @@ var optionsConsulta= {
     "#generodetalle": { alias:"GENER", tabla:"catalogodetalle", campos:"codigo, nombre",  filtro:"ccatalogo = 'GENER' and activo=1 ",  orderby:"nombre"  },
     "#ocupacion": { alias:"OCUPACION", tabla:"ocupacion", campos:"codigo, nombre",  filtro:" activo=1 ",  orderby:"nombre"  },
     "#cprovincia": { alias:"PROVINCIAS", tabla:"provincia", campos:"codigo, nombre",  filtro:"1=1",  orderby:"nombre"  },
+    //"#cciudad": { alias:"CIUDADEES", tabla:"ciudad", campos:"codigo, nombre",  filtro:"1=1",  orderby:"nombre"  },
 }
 
 function disparadorPaginaInicial() {
@@ -107,7 +108,7 @@ function initAcciones(){
         Android.abrirDialogoFirma('firma2');
     });
     $("#btnFotoPersona").on("click", function(event){
-        Android.tomarFoto('imgPersona', 8);
+        Android.tomarFoto('imgPersona', 4);
     });
     $("#btnSelImgPersona").on("click", function(event){
         Android.selecionarFoto('imgPersona');
@@ -123,7 +124,7 @@ function initAcciones(){
     $("#btnFotoDomicilio").on("click", function(event){
         numFotoDomicilio++;
         if(numFotoDomicilio <= 3){
-            Android.tomarFoto('imgDireccion'+numFotoDomicilio, 5);
+            Android.tomarFoto('imgDireccion'+numFotoDomicilio, 3);
         }else{
             M.toast({html: "Solo puede tomar hasta tres fotos", displayLength:5000});  
         }                
@@ -146,7 +147,7 @@ function initAcciones(){
         });
 
     $("#btnCedulaAnversoSolicitante").on("click", function(event){
-        Android.tomarFoto('imgCedulaAnversoSolicitante',8);
+        Android.tomarFoto('imgCedulaAnversoSolicitante',4);
     });
     $("#btnSelCedulaAnversoSolicitante").on("click", function(event){
         Android.selecionarFoto('imgCedulaAnversoSolicitante');
@@ -161,7 +162,7 @@ function initAcciones(){
      });
 
     $("#btnCedulaReversoSolicitante").on("click", function(event){
-        Android.tomarFoto('imgCedulaReversoSolicitante',8);
+        Android.tomarFoto('imgCedulaReversoSolicitante',4);
     });
     $("#btnSelCedulaReversoSolicitante").on("click", function(event){
         Android.selecionarFoto('imgCedulaReversoSolicitante');
@@ -176,7 +177,7 @@ function initAcciones(){
     });
 
     $("#btnServicioSolicitante").on("click", function(event){
-        Android.tomarFoto('imgServicioSolicitante',5);
+        Android.tomarFoto('imgServicioSolicitante',3);
     });
     $("#btnSelServicioSolicitante").on("click", function(event){
         Android.selecionarFoto('imgServicioSolicitante');
@@ -191,7 +192,7 @@ function initAcciones(){
     });
 
     $("#btnCedulaAnversoGarante").on("click", function(event){
-        Android.tomarFoto('imgCedulaAnversoGarante',8);
+        Android.tomarFoto('imgCedulaAnversoGarante',4);
     });
     $("#btnSelCedulaAnversoGarante").on("click", function(event){
         Android.selecionarFoto('imgCedulaAnversoGarante');
@@ -206,7 +207,7 @@ function initAcciones(){
     });
 
     $("#btnCedulaReversoGarante").on("click", function(event){
-        Android.tomarFoto('imgCedulaReversoGarante',8);
+        Android.tomarFoto('imgCedulaReversoGarante',4);
     });
     $("#btnSelCedulaReversoGarante").on("click", function(event){
         Android.selecionarFoto('imgCedulaReversoGarante');
@@ -221,7 +222,7 @@ function initAcciones(){
     });
 
     $("#btnServicioGarante").on("click", function(event){
-        Android.tomarFoto('imgServicioGarante', 5);
+        Android.tomarFoto('imgServicioGarante', 3);
     });
     $("#btnSelServicioGarante").on("click", function(event){
         Android.selecionarFoto('imgServicioGarante');
@@ -236,7 +237,7 @@ function initAcciones(){
     });
 
     $("#btnImgAux1").on("click", function(event){
-        Android.tomarFoto('imgAux1',5);
+        Android.tomarFoto('imgAux1',3);
     });
     $("#btnSelImgAux1").on("click", function(event){
         Android.selecionarFoto('imgAux1');
@@ -251,7 +252,7 @@ function initAcciones(){
     });
 
     $("#btnImgAux2").on("click", function(event){
-        Android.tomarFoto('imgAux2',5);
+        Android.tomarFoto('imgAux2',3);
     });
     $("#btnSelImgAux2").on("click", function(event){
         Android.selecionarFoto('imgAux2');
@@ -266,7 +267,7 @@ function initAcciones(){
     });
 
     $("#btnImgAux3").on("click", function(event){
-        Android.tomarFoto('imgAux3',5);
+        Android.tomarFoto('imgAux3',3);
     });
     $("#btnSelImgAux3").on("click", function(event){
         Android.selecionarFoto('imgAux3');
@@ -314,7 +315,13 @@ function initAcciones(){
     });
    
     $("#btnCancelar").on("click", function(e){
-        window.location.reload(true);
+        try{
+            Android.recargarPagina("home.html");
+        }catch(e){
+             window.location.reload(true);
+        }
+
+
     });
 
     $("#btnAddProducto").on("click", function(e){
@@ -381,11 +388,18 @@ function initAcciones(){
     
 }
 
-function cargarCiudades(cprovincia){
-    var optionsConsulta_= {
-        "#cciudad": { alias:"CIUDADES", tabla:"ciudad", campos:"codigo, nombre",  filtro:"1=1 and cprovincia="+cprovincia,  orderby:"secuencia"  },
+function cargarCiudades(cprovincia, callback){
+    if(cprovincia==='' ){
+        return;
     }
-    _consultarCatalogo(optionsConsulta_);
+   var condicionProvincia=" cprovincia="+cprovincia;
+    if(cprovincia==-1){
+        condicionProvincia=" 1=1";
+    }
+    var optionsConsulta_= {
+        "#cciudad": { alias:"CIUDADES", tabla:"ciudad", campos:"codigo, nombre",  filtro:"1=1 and "+condicionProvincia,  orderby:"secuencia"  },
+    }
+    _consultarCatalogo(optionsConsulta_, callback);
 }
 
 function iniciarZoomImagenes(){
@@ -605,11 +619,23 @@ function consultarInfopersona(){
             console.log(consultas) 
             jQuery.each(consultas, function(form, entidades) {
                 jQuery.each(entidades, function() {
-                    entidad = this    
-                    jQuery.each(entidad, function(key, value ) {        
+                    entidad = this
+                    var cprovincia = "";
+                    var ccuidad = "";
+                    jQuery.each(entidad, function(key, value ) {
                         $("#"+form+"  [name='"+key+"']").val(value).focus();                        
-                        M.FormSelect.init(document.querySelectorAll('select'), {});            
+                        M.FormSelect.init(document.querySelectorAll('select'), {});
+                        if(form === 'datosDireccion' && key ==='cprovincia'){
+                            cprovincia=value;
+                        }
+                        if(form === 'datosDireccion' && key ==='cciudad'){
+                            ccuidad=value;
+                        }
                     });
+                    cargarCiudades(cprovincia, function(){
+                        $("#"+form+"  [name='cciudad']").val(ccuidad);
+                    });
+
                 });
             });
         });
@@ -1112,24 +1138,42 @@ function guardarProducto(){
 function guardarTab9(){
     var imgHtml= [];
     var tipoImagen= [];
-    imgHtml.push("imgCedulaAnversoSolicitante");
-    tipoImagen.push("CEDAS");
-    imgHtml.push("imgCedulaReversoSolicitante");
-    tipoImagen.push("CEDRS");
-    imgHtml.push("imgServicioSolicitante");
-    tipoImagen.push("SERSOL");
-    imgHtml.push("imgCedulaAnversoGarante");
-    tipoImagen.push("CEDAG");
-    imgHtml.push("imgCedulaReversoGarante");
-    tipoImagen.push("CEDRG");
-    imgHtml.push("imgServicioGarante");
-    tipoImagen.push("SERGAR");
-    imgHtml.push("imgAux1");
-    tipoImagen.push("AUX1");
-    imgHtml.push("imgAux2");
-    tipoImagen.push("AUX2");
-    imgHtml.push("imgAux3");
-    tipoImagen.push("AUX3");
+    if($("#imgCedulaAnversoSolicitante").attr('src').indexOf("imagen.PNG") == -1 ){
+        imgHtml.push("imgCedulaAnversoSolicitante");
+        tipoImagen.push("CEDAS");
+    }
+    if($("#imgCedulaReversoSolicitante").attr('src').indexOf("imagen.PNG") == -1 ){
+        imgHtml.push("imgCedulaReversoSolicitante");
+        tipoImagen.push("CEDRS");
+    }
+    if($("#imgServicioSolicitante").attr('src').indexOf("imagen.PNG") == -1 ){
+        imgHtml.push("imgServicioSolicitante");
+        tipoImagen.push("SERSOL");
+    }
+    if($("#imgCedulaAnversoGarante").attr('src').indexOf("imagen.PNG") == -1 ){
+        imgHtml.push("imgCedulaAnversoGarante");
+        tipoImagen.push("CEDAG");
+    }
+    if($("#imgCedulaReversoGarante").attr('src').indexOf("imagen.PNG") == -1 ){
+        imgHtml.push("imgCedulaReversoGarante");
+        tipoImagen.push("CEDRG");
+    }
+    if($("#imgServicioGarante").attr('src').indexOf("imagen.PNG") == -1 ){
+        imgHtml.push("imgServicioGarante");
+        tipoImagen.push("SERGAR");
+    }
+    if($("#imgAux1").attr('src').indexOf("imagen.PNG") == -1 ){
+        imgHtml.push("imgAux1");
+        tipoImagen.push("AUX1");
+    }
+    if($("#imgAux2").attr('src').indexOf("imagen.PNG") == -1 ){
+        imgHtml.push("imgAux2");
+        tipoImagen.push("AUX2");
+    }
+    if($("#imgAux3").attr('src').indexOf("imagen.PNG") == -1 ){
+        imgHtml.push("imgAux3");
+        tipoImagen.push("AUX3");
+    }
 
 
     guardarImagenes(imgHtml, tipoImagen, 0, function(){
@@ -1146,45 +1190,58 @@ function guardarImagenes(imgHtml, tipoImagen, i,  callback){
     canvas.height = img.naturalHeight;
     let context = canvas.getContext('2d');
     context.drawImage(img, 0, 0);
-    canvas.toBlob(function(blob) {
-        if(blob == null){
-            i++;
-            if(i < imgHtml.length ){
-                guardarImagenes(imgHtml, tipoImagen, i++,  callback);
-            }else{
-                callback();
-            }
-            return;
-        }
-        if(blob.size < 700){
-            i++;
-            if(i < imgHtml.length ){
-                guardarImagenes(imgHtml, tipoImagen, i++,  callback);
-            }else{
-                callback();
-            }
-            console.log('saltar imagen:'+blob.size);
-            return;
-        }
-        var data = new FormData();
-        data.append('idpersona', IDPERSONA);
-        data.append('imagen', blob);
-        data.append('tipoimagencatalogo', "TIPOIMG");
-        data.append('tipoimagendetalle', tipoImagen[i]);
-        console.log('guardar '+i + '  - '+imgHtml[i]);
-        _postArchivo("/insertarImagen",data, function(dataRes){
-            i++;
-            if(dataRes.statusCode == 0){
-                if(i < imgHtml.length ){
-                    guardarImagenes(imgHtml, tipoImagen, i,  callback);
-                }else{
-                    callback();
+    try{
+        canvas.toBlob(function(blob) {
+                if(blob == null){
+                    i++;
+                    if(i < imgHtml.length ){
+                        guardarImagenes(imgHtml, tipoImagen, i++,  callback);
+                    }else{
+                        callback();
+                    }
+                    return;
                 }
-            }else{
-                _mostrarMensajeError(dataRes.error);
-            }
-        });
-    });
+                if(blob.size < 700){
+                    i++;
+                    if(i < imgHtml.length ){
+                        guardarImagenes(imgHtml, tipoImagen, i++,  callback);
+                    }else{
+                        callback();
+                    }
+                    console.log('saltar imagen:'+blob.size);
+                    return;
+                }
+                var data = new FormData();
+                data.append('idpersona', IDPERSONA);
+                data.append('imagen', blob);
+                data.append('tipoimagencatalogo', "TIPOIMG");
+                data.append('tipoimagendetalle', tipoImagen[i]);
+                var intervalorModal = 100/imgHtml.length;
+                console.log('tamanio '+imgHtml.length);
+                console.log('guardar '+i + '  - '+imgHtml[i]+ "="+intervalorModal);
+                _postArchivo("/insertarImagen",data, function(dataRes){
+                    i++;
+                    if(dataRes.statusCode == 0){
+                        if(i < imgHtml.length ){
+                            guardarImagenes(imgHtml, tipoImagen, i,  callback);
+                        }else{
+                            callback();
+                        }
+                    }else{
+                        _mostrarMensajeError(dataRes.error);
+                    }
+                }, intervalorModal );
+            });
+    }catch(e){
+        i++;
+        if(i < imgHtml.length ){
+            guardarImagenes(imgHtml, tipoImagen, i++,  callback);
+        }else{
+            callback();
+        }
+        return;
+    }
+
 }
 
 function consultarImagen(tipoimagendetalle, arrayHhtml){
